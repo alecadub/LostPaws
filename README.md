@@ -4,7 +4,7 @@
 
 ## LostPaws
 
-LostPaws is a simple prototype that let users find their lost pets!
+LostPaws is a simple prototype that help users find their lost pets!
 
 ### Team Members
 
@@ -37,17 +37,16 @@ Nodejs: https://nodejs.org/en/
 
 ### Getting started 
 
-`yarn start`: 
-Runs the app in the development mode.<br />
+Run the app in development mode: `yarn start`
+<br />
 
-`yarn build`: 
-Builds the app for production to the `build` folder.<br />
+Build the app for production to the `build` folder: `yarn build`
+<br />
 
-`npx generate-react-cli component ComponentName`:
-Generate component with generate-react-cli.  <br />
+Generate component with generate-react-cli: `npx generate-react-cli component ComponentName`:
+<br />
 
-`npx generate-react-cli page PageName`:
-Generate page with generate-react-cli.
+Generate page with generate-react-cli: `npx generate-react-cli page PageName`
 
 ### Icons
 
