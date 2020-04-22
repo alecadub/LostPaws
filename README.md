@@ -21,11 +21,11 @@ LostPaws is a simple prototype that help users find their lost pets!
           <td>40032876</td>     
         </tr>
         <tr>
-          <td>Brianne O'Gallagher-Roy</td>
+          <td>Eduard Paraschivescu</td>
           <td></td>
         </tr>
         <tr>
-          <td>Eduard Paraschivescu</td>
+          <td>Brianne O'Gallagher-Roy</td>
           <td></td>
         </tr>
     </tbody>
@@ -36,6 +36,9 @@ LostPaws is a simple prototype that help users find their lost pets!
 Nodejs: https://nodejs.org/en/
 
 ### Getting started 
+
+Install dependecies: `yarn install`
+<br />
 
 Run the app in development mode: `yarn start`
 <br />
