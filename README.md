@@ -24,3 +24,7 @@ Generate component with generate-react-cli.  <br />
 
 `npx generate-react-cli page PageName`:
 Generate page with generate-react-cli.
+
+### Icons
+
+Check the variety of icons supported in the app here: https://react-icons.netlify.app/
