@@ -4,8 +4,32 @@
 
 ## LostPaws
 
-This is a small project for our 390 User Interface class. <br />
-LostPaws is a simple prototype that let users find their lost pets! 
+LostPaws is a simple prototype that let users find their lost pets!
+
+### Team Members
+
+<table align="center">
+    <thead>
+      <tr>
+        <th>Members</th>
+        <th>SID</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Alec Adub</td>
+          <td>40032876</td>     
+        </tr>
+        <tr>
+          <td>Brianne O'Gallagher-Roy</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Eduard Paraschivescu</td>
+          <td></td>
+        </tr>
+    </tbody>
+  </table>
 
 ### Requirements
 
