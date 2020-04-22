@@ -13,8 +13,18 @@ Nodejs: https://nodejs.org/en/
 
 ### Getting started 
 
-`yarn start`
+`yarn start`: 
 Runs the app in the development mode.<br />
 
-`yarn build`
+`yarn build`: 
 Builds the app for production to the `build` folder.<br />
+
+`npx generate-react-cli component ComponentName`:
+Generate component with generate-react-cli.  <br />
+
+`npx generate-react-cli page PageName`:
+Generate page with generate-react-cli.
+
+### Icons
+
+Check the variety of icons supported in the app here: https://react-icons.netlify.app/
