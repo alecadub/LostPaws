@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Nav, Navbar } from 'react-bootstrap';
 import './Header.scss';
-
 class Header extends React.Component {
 
   render() {
