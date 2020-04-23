@@ -25,7 +25,13 @@ class Header extends React.Component<headerProps> {
 
     return (
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand><span id="logo-title">LostPaws</span></Navbar.Brand>
+        <img
+          alt=""
+          src="https://s3.amazonaws.com/agileholedigging.com/img/lostpaws.svg"
+          width="40"
+          height="40"
+        />
+        <Navbar.Brand><span id="logo-title">Lost Paws</span></Navbar.Brand>
         <Nav className="mr-auto">
         </Nav>
         {lostButton}
