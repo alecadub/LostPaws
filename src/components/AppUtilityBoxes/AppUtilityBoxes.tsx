@@ -50,8 +50,6 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
     }
 
     render() {
-        console.log(this.props.selectedMode);
-
         return (
             <div id="func-buttons">
                 <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal} closeModal={this.closeSearchModal}></SearchModal>

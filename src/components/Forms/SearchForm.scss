@@ -1,0 +1,9 @@
+@import './../../custom.scss';
+
+#submit-button {
+  float: right;
+}
+
+#error-message {
+  color: $primary-color;
+}
