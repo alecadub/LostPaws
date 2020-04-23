@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import './App.scss';
+import AppUtilityBoxes from './components/AppUtilityBoxes/AppUtilityBoxes';
 import Header from './components/Header/Header';
 import PetCard from './components/PetCard/PetCard';
-import { FaPlus, FaSearch } from 'react-icons/fa';
 class App extends React.Component {
 
   public mockNumberOfCards() {
@@ -21,13 +20,10 @@ class App extends React.Component {
     return (
       <div>
         <Header></Header>
-        <div id="func-buttons">
-          <Button id="add-button" variant="success"><FaPlus /></Button>
-          <Button id="search-button" variant="info"><FaSearch /></Button>
-        </div>
+        <AppUtilityBoxes></AppUtilityBoxes>
         <div id="cards">
-          {cards.map(() => {
-            return <PetCard title="The Dog" text="The most beautiful thing in the world."></PetCard>
+          {cards.map((result, i) => {
+            return <PetCard key={i} title="The Dog" text="The most beautiful thing in the world."></PetCard>
           })}
         </div>
       </div>

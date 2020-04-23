@@ -3,6 +3,7 @@ import './PetCard.scss';
 import { Card } from 'react-bootstrap';
 
 type PetCardProps = {
+  key: number,
   imgSrc?: any,
   title: string,
   text: string,
