@@ -26,7 +26,7 @@ class SearchModal extends React.Component<searchModalProps> {
                 <Modal.Header closeButton>
                     <Modal.Title>{welcomeMessage}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>TODO: add search forms here</Modal.Body>
+                <Modal.Body>TODO: forms here</Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={this.props.closeModal}>
                         Close
