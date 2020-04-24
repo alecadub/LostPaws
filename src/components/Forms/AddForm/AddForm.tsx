@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import './AddForm.scss';
 import { selectedMode } from '../../../models/types';
 import { FaDog, FaEye } from 'react-icons/fa';
+import AlgoliaPlaces from 'algolia-places-react';
 
 type addFormProps = {
     closeModal: () => void,
@@ -130,16 +131,15 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedPetForm(): any {
         return (
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event)}>
-                <Form.Row>
-                    <Form.Group controlId="validationLocation">
-                        <Form.Label>Location</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Add location"
-                        />
-                    </Form.Group>
-                </Form.Row>
+                <AlgoliaPlaces
+                    id="algolia"
+                    placeholder='Write an address here'
+                    options={{
+                        appId: 'plMBNOJMIOCV',
+                        apiKey: '97a259e33ac0a45b696f7f181fd0428e',
+                        countries: ['ca'],
+                    }}
+                />
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -148,8 +148,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedSelectedButtons(): any {
         return (
             <div id="div-buttons">
-                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog id="icons"/>Found</Button>
-                <Button variant="primary"><FaEye id="icons"/>Sighted</Button>
+                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog id="icons" />Found</Button>
+                <Button variant="primary"><FaEye id="icons" />Sighted</Button>
             </div>
         );
     }
