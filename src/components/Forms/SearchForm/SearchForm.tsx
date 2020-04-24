@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { searchData } from '../../../models/types';
 import './SearchForm.scss';
+import Maps from '../../Maps/Maps';
 
 type searchFormProps = {
     closeModal: () => void,
@@ -45,6 +46,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
 
     render() {
         let errorMessage: any = '';
+        
         if (!this.state.valid) {
             errorMessage = <span id="error-message">Fill a field or enter an image to start your search ! <br />(1 minimum)</span>;
         }
@@ -59,6 +61,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
                     <Form.Label>Breed</Form.Label>
                     <Form.Control type="text" placeholder="Enter breed of animal (optional)" />
                 </Form.Group>
+                <Maps></Maps>
                 {errorMessage}
                 <Button id="submit-button" variant="success" type="submit">
                     Submit

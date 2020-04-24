@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import './AddForm.scss';
 import { selectedMode } from '../../../models/types';
 import { FaDog, FaEye } from 'react-icons/fa';
-import AlgoliaPlaces from 'algolia-places-react';
+import Maps from '../../Maps/Maps';
 
 type addFormProps = {
     closeModal: () => void,
@@ -123,6 +123,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         />
                     </Form.Group>
                 </Form.Row>
+                <Maps></Maps>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -131,15 +132,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedPetForm(): any {
         return (
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event)}>
-                <AlgoliaPlaces
-                    id="algolia"
-                    placeholder='Write an address here'
-                    options={{
-                        appId: 'plMBNOJMIOCV',
-                        apiKey: '97a259e33ac0a45b696f7f181fd0428e',
-                        countries: ['ca'],
-                    }}
-                />
+                <Maps></Maps>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
