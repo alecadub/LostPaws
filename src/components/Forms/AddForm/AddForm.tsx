@@ -9,7 +9,7 @@ type addFormProps = {
     selectedMode: selectedMode
 }
 
-type addLostData = {
+type addData = {
     email: string
 }
 
@@ -148,8 +148,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedSelectedButtons(): any {
         return (
             <div id="div-buttons">
-                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog />Found</Button>
-                <Button variant="primary"><FaEye />Sighted</Button>
+                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog id="icons"/>Found</Button>
+                <Button variant="primary"><FaEye id="icons"/>Sighted</Button>
             </div>
         );
     }
@@ -157,8 +157,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getFoundSelectedButtons(): any {
         return (
             <div id="div-buttons">
-                <Button id="button" variant="primary" ><FaDog id="icons"/>Found</Button>
-                <Button variant="outline-primary" onClick={this.handleSightedClick}><FaEye id="icons"/>Sighted</Button>
+                <Button id="button" variant="primary" ><FaDog id="icons" />Found</Button>
+                <Button variant="outline-primary" onClick={this.handleSightedClick}><FaEye id="icons" />Sighted</Button>
             </div>
         );
     }
