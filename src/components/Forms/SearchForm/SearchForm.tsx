@@ -6,6 +6,7 @@ import Maps from '../../Maps/Maps';
 
 type searchFormProps = {
     closeModal: () => void,
+    setSearchData: (searchData: searchData) => void,
 }
 
 class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
@@ -20,7 +21,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
 
     public handleSubmit(event: any): void {
         event.preventDefault();
-        
+
         let searchData: searchData = {}
 
         if (event.target[0]) {
@@ -36,6 +37,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
 
         if (searchData.animal || searchData.breed || searchData.coordinates) {
             this.setState({ valid: true });
+            this.props.setSearchData(searchData);
             this.props.closeModal();
         } else {
             this.setState({ valid: false });

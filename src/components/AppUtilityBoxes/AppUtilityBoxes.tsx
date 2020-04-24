@@ -1,14 +1,15 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaPlus, FaSearch } from 'react-icons/fa';
-import { selectedMode } from '../../models/types';
+import { selectedMode, searchData } from '../../models/types';
 import AddModal from '../Modals/AddModal/AddModal';
 import SearchModal from '../Modals/SearchModal/SearchModal';
 import './AppUtilityBoxes.scss';
 
 
 type appUtilityBoxesProps = {
-    selectedMode: selectedMode
+    selectedMode: selectedMode,
+    setSearchData: (searchData: searchData) => void
 }
 
 type textEvent = {
@@ -27,6 +28,7 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
         this.closeSearchModal = this.closeSearchModal.bind(this);
         this.openFoundModal = this.openFoundModal.bind(this);
         this.closeFoundModal = this.closeFoundModal.bind(this);
+        this.setFilter = this.setFilter.bind(this);
     }
 
     public handleChange(event: textEvent): void {
@@ -49,10 +51,15 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
         this.setState({ ...this.state, openFoundModal: false })
     }
 
+    public setFilter(searchData: searchData): void {
+        this.props.setSearchData(searchData);
+    }
+
     render() {
         return (
             <div id="func-buttons">
-                <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal} closeModal={this.closeSearchModal}></SearchModal>
+                <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal}
+                    closeModal={this.closeSearchModal} setSearchData={this.setFilter}></SearchModal>
                 <AddModal selectedMode={this.props.selectedMode} isSet={this.state.openFoundModal} closeModal={this.closeFoundModal}></AddModal>
                 <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>
                 <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /></Button>

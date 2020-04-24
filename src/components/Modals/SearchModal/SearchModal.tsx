@@ -1,13 +1,14 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { selectedMode } from '../../../models/types';
+import { selectedMode, searchData } from '../../../models/types';
 import './SearchModal.scss';
 import SearchForm from '../../Forms/SearchForm/SearchForm';
 
 type searchModalProps = {
     selectedMode: selectedMode,
     isSet: boolean,
-    closeModal: () => void
+    closeModal: () => void,
+    setSearchData: (searchData: searchData) => void
 }
 
 class SearchModal extends React.Component<searchModalProps> {
@@ -25,7 +26,7 @@ class SearchModal extends React.Component<searchModalProps> {
                 <Modal.Header closeButton>
                     <Modal.Title>{welcomeMessage}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><SearchForm closeModal={this.props.closeModal}></SearchForm></Modal.Body>
+                <Modal.Body><SearchForm closeModal={this.props.closeModal} setSearchData={this.props.setSearchData}></SearchForm></Modal.Body>
             </Modal>
         );
     }

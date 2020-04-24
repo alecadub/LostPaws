@@ -1,9 +1,11 @@
 import React from 'react';
 import PetCard from './PetCard/PetCard';
 import './PetCardList.scss';
+import { searchData, selectedMode } from '../../models/types';
 
 type petCardListProps = {
-    filters?: any
+    filters: searchData,
+    selectedMode: selectedMode
 }
 
 class PetCardList extends React.Component<petCardListProps> {
@@ -18,6 +20,7 @@ class PetCardList extends React.Component<petCardListProps> {
 
     render() {
         let cards = this.mockNumberOfCards();
+        console.log(this.props);
 
         return (
             <div id="cards">

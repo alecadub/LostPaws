@@ -3,16 +3,25 @@ import './App.scss';
 import AppUtilityBoxes from './components/AppUtilityBoxes/AppUtilityBoxes';
 import Header from './components/Header/Header';
 import PetCardList from './components/PetCardList/PetCardList';
-import { selectedMode } from './models/types';
+import { selectedMode, searchData } from './models/types';
 
-class App extends React.Component<{}, { selectedMode: selectedMode }> {
+class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData }> {
 
   constructor(props: any) {
     super(props);
-    this.state = { selectedMode: 'lost' };
+    this.state = {
+      selectedMode: 'lost',
+      searchData: {
+        animal: undefined,
+        breed: undefined,
+        imgSrc: undefined,
+        coordinates: undefined
+      }
+    };
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
     this.foundSelected = this.foundSelected.bind(this);
+    this.setSearchData = this.setSearchData.bind(this);
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
@@ -27,12 +36,16 @@ class App extends React.Component<{}, { selectedMode: selectedMode }> {
     this.changeSelectedMode('found');
   }
 
+  public setSearchData(searchData: searchData) {
+    this.setState({ ...this.state, searchData });
+  }
+
   render() {
     return (
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected}></Header>
-        <AppUtilityBoxes selectedMode={this.state.selectedMode}></AppUtilityBoxes>
-        <PetCardList></PetCardList>
+        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}></AppUtilityBoxes>
+        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}></PetCardList>
       </div>
     );
   }
