@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import './AddForm.scss';
 import { selectedMode } from '../../../models/types';
 import { FaDog, FaEye } from 'react-icons/fa';
+import Maps from '../../Maps/Maps';
 
 type addFormProps = {
     closeModal: () => void,
@@ -122,6 +123,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         />
                     </Form.Group>
                 </Form.Row>
+                <Maps></Maps>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -130,16 +132,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedPetForm(): any {
         return (
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event)}>
-                <Form.Row>
-                    <Form.Group controlId="validationLocation">
-                        <Form.Label>Location</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Add location"
-                        />
-                    </Form.Group>
-                </Form.Row>
+                <Maps></Maps>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -148,8 +141,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     public getSightedSelectedButtons(): any {
         return (
             <div id="div-buttons">
-                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog id="icons"/>Found</Button>
-                <Button variant="primary"><FaEye id="icons"/>Sighted</Button>
+                <Button id="button" variant="outline-primary" onClick={this.handleFoundClick}><FaDog id="icons" />Found</Button>
+                <Button variant="primary"><FaEye id="icons" />Sighted</Button>
             </div>
         );
     }
