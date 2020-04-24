@@ -17,10 +17,10 @@ class Header extends React.Component<headerProps> {
     let foundButton;
     if (this.props.selectedMode === 'lost') {
       lostButton = <Button id="header-button" variant="primary" onClick={this.props.lostSelected}>Lost</Button>;
-      foundButton = <Button id="header-button" variant="outline-primary" onClick={this.props.foundSelected}>Found</Button>;
+      foundButton = <Button id="header-button" variant="outline-primary" onClick={this.props.foundSelected}>Found/Sighted</Button>;
     } else {
       lostButton = <Button id="header-button" variant="outline-primary" onClick={this.props.lostSelected}>Lost</Button>;
-      foundButton = <Button id="header-button" variant="primary" onClick={this.props.foundSelected}>Found</Button>;
+      foundButton = <Button id="header-button" variant="primary" onClick={this.props.foundSelected}>Found/Sighted</Button>;
     }
 
     return (
