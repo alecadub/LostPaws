@@ -18,7 +18,7 @@ class AddModal extends React.Component<addModalProps> {
         if (this.props.selectedMode === 'lost') {
             welcomeMessage = 'Add a lost pet!'
         } else {
-            welcomeMessage = 'Add a found pet!'
+            welcomeMessage = 'Add a found or sighted pet!'
         }
         return (
             <Modal show={this.props.isSet} onHide={this.props.closeModal}>
