@@ -47,7 +47,6 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   public myAdSelected(): void {
-    console.log("-------------------------")
     this.changeSelectedMode('myad');
   }
 
@@ -65,7 +64,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
       page = <MyAd></MyAd>
     } else {
       page = <AppUtilityBoxes selectedMode={this.state.selectedMode} myAdSelected={this.myAdSelected} setSearchData={this.setSearchData}
-      fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
+        fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
     }
     return (
       <div>
