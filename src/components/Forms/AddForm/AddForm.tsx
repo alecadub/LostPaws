@@ -4,6 +4,7 @@ import './AddForm.scss';
 import { selectedMode, coordinates } from '../../../models/types';
 import { FaDog, FaEye } from 'react-icons/fa';
 import Maps from '../../Maps/Maps';
+import ImageForm from '../ImageForm/ImageForm';
 
 type addFormProps = {
     closeModal: () => void,
@@ -20,6 +21,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     private animal: string | null = null;
     private breed: string | null = null;
     private name: string | null = null;
+    private imgSrc: string | null = null;
 
     constructor(props: addFormProps) {
         super(props);
@@ -30,6 +32,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         this.setEmail = this.setEmail.bind(this);
         this.setAnimal = this.setAnimal.bind(this);
         this.setName = this.setName.bind(this);
+        this.setImgSrc = this.setImgSrc.bind(this);
     }
 
     public setCoordinates(coordinates: coordinates) {
@@ -50,6 +53,10 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
 
     public setName(event: any) {
         this.name = event.target.value;
+    }
+
+    public setImgSrc(imgSrc: any) {
+        this.imgSrc = imgSrc;
     }
 
     public handleFoundClick(): void {
@@ -84,15 +91,19 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             dataToPost['name'] = this.name;
         }
 
+        if (this.imgSrc) {
+            dataToPost['imgSrc'] = this.imgSrc;
+        }
+
         if (Object.keys(dataToPost).length !== 0) {
             let canPost: boolean = false;
 
-            if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email']) {
+            if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
-            } else if (type === 'found' && dataToPost['animal'] && dataToPost['email']) {
+            } else if (type === 'found' && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
-            } else if (type === 'sighted') {
-                canPost = true
+            } else if (type === 'sighted' && dataToPost['imgSrc']) {
+                canPost = true;
             }
 
             if (canPost) {
@@ -150,6 +161,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         />
                     </Form.Group>
                 </Form.Row>
+                <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -202,6 +214,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                     </Form.Group>
                 </Form.Row>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
+                <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
@@ -211,6 +224,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         return (
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event, 'sighted')}>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
+                <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
