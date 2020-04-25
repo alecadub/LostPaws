@@ -49,7 +49,6 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     }
 
     public setName(event: any) {
-        console.log(event.target.value)
         this.name = event.target.value;
     }
 
@@ -85,12 +84,23 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             dataToPost['name'] = this.name;
         }
 
-        if (dataToPost) {
-            dataToPost['type'] = type;
-            console.log(dataToPost);
-            this.postPetData(dataToPost);
-            this.props.fetchPets();
-            this.props.closeModal();
+        if (Object.keys(dataToPost).length !== 0) {
+            let canPost: boolean = false;
+
+            if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email']) {
+                canPost = true;
+            } else if (type === 'found' && dataToPost['animal'] && dataToPost['email']) {
+                canPost = true;
+            } else if (type === 'sighted') {
+                canPost = true
+            }
+
+            if (canPost) {
+                dataToPost['type'] = type;
+                this.postPetData(dataToPost);
+                this.props.fetchPets();
+                this.props.closeModal();
+            }
         }
     }
 
