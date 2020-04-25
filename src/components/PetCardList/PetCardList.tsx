@@ -19,7 +19,7 @@ class PetCardList extends React.Component<petCardListProps> {
     }
 
     render() {
-        let cards = this.mockNumberOfCards();
+        let cards = this.mockNumberOfCards(); //TODO: Get real pets
         console.log(this.props);
 
         return (

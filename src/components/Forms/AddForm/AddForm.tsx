@@ -7,7 +7,8 @@ import Maps from '../../Maps/Maps';
 
 type addFormProps = {
     closeModal: () => void,
-    selectedMode: selectedMode
+    selectedMode: selectedMode,
+    fetchPets: () => void
 }
 
 type addData = {
@@ -35,6 +36,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
 
     public handleSubmit(event: any): void {
         event.preventDefault();
+        this.props.fetchPets();
         this.props.closeModal();
     }
 

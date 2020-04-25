@@ -5,7 +5,7 @@ import Header from './components/Header/Header';
 import PetCardList from './components/PetCardList/PetCardList';
 import { selectedMode, searchData } from './models/types';
 
-class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData }> {
+class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean }> {
 
   constructor(props: any) {
     super(props);
@@ -16,12 +16,14 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
         breed: undefined,
         imgSrc: undefined,
         coordinates: undefined
-      }
+      },
+      fetchPets: true
     };
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
     this.foundSelected = this.foundSelected.bind(this);
     this.setSearchData = this.setSearchData.bind(this);
+    this.fetchPets = this.fetchPets.bind(this);
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
@@ -40,11 +42,15 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.setState({ ...this.state, searchData });
   }
 
+  public fetchPets(){
+    this.setState({ ...this.state, fetchPets: true });
+  }
+
   render() {
     return (
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected}></Header>
-        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}></AppUtilityBoxes>
+        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData} fetchPets={this.fetchPets}></AppUtilityBoxes>
         <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}></PetCardList>
       </div>
     );

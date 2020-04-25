@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Toast } from 'react-bootstrap';
 import { FaPlus, FaSearch } from 'react-icons/fa';
-import { selectedMode, searchData } from '../../models/types';
+import { searchData, selectedMode } from '../../models/types';
 import AddModal from '../Modals/AddModal/AddModal';
 import SearchModal from '../Modals/SearchModal/SearchModal';
 import './AppUtilityBoxes.scss';
@@ -9,7 +9,8 @@ import './AppUtilityBoxes.scss';
 
 type appUtilityBoxesProps = {
     selectedMode: selectedMode,
-    setSearchData: (searchData: searchData) => void
+    setSearchData: (searchData: searchData) => void,
+    fetchPets: () => void
 }
 
 type textEvent = {
@@ -60,7 +61,8 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
             <div id="func-buttons">
                 <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal}
                     closeModal={this.closeSearchModal} setSearchData={this.setFilter}></SearchModal>
-                <AddModal selectedMode={this.props.selectedMode} isSet={this.state.openFoundModal} closeModal={this.closeFoundModal}></AddModal>
+                <AddModal selectedMode={this.props.selectedMode} isSet={this.state.openFoundModal}
+                    closeModal={this.closeFoundModal} fetchPets={this.props.fetchPets}></AddModal>
                 <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>
                 <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /></Button>
                 <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={this.handleChange} />
