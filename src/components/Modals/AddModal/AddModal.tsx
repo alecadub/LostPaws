@@ -7,7 +7,8 @@ import './AddModal.scss';
 type addModalProps = {
     selectedMode: selectedMode,
     isSet: boolean,
-    closeModal: () => void
+    closeModal: () => void,
+    fetchPets: () => void
 }
 
 class AddModal extends React.Component<addModalProps> {
@@ -25,7 +26,8 @@ class AddModal extends React.Component<addModalProps> {
                 <Modal.Header closeButton>
                     <Modal.Title>{welcomeMessage}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><AddForm closeModal={this.props.closeModal} selectedMode={this.props.selectedMode}></AddForm></Modal.Body>
+                <Modal.Body><AddForm closeModal={this.props.closeModal} selectedMode={this.props.selectedMode}
+                    fetchPets={this.props.fetchPets}></AddForm></Modal.Body>
             </Modal>
         );
     }

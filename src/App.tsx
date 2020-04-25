@@ -2,17 +2,28 @@ import React from 'react';
 import './App.scss';
 import AppUtilityBoxes from './components/AppUtilityBoxes/AppUtilityBoxes';
 import Header from './components/Header/Header';
-import PetCard from './components/PetCard/PetCard';
-import { selectedMode } from './models/types';
+import PetCardList from './components/PetCardList/PetCardList';
+import { selectedMode, searchData } from './models/types';
 
-class App extends React.Component<{}, { selectedMode: selectedMode }> {
+class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean }> {
 
   constructor(props: any) {
     super(props);
-    this.state = { selectedMode: 'lost' };
+    this.state = {
+      selectedMode: 'lost',
+      searchData: {
+        animal: undefined,
+        breed: undefined,
+        imgSrc: undefined,
+        coordinates: undefined
+      },
+      fetchPets: true
+    };
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
     this.foundSelected = this.foundSelected.bind(this);
+    this.setSearchData = this.setSearchData.bind(this);
+    this.fetchPets = this.fetchPets.bind(this);
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
@@ -27,27 +38,20 @@ class App extends React.Component<{}, { selectedMode: selectedMode }> {
     this.changeSelectedMode('found');
   }
 
-  public mockNumberOfCards(): number[] {
-    let mockCards: number[] = [];
-    for (let i: number = 0; i < 30; i++) {
-      mockCards.push(1);
-    }
-    return mockCards;
+  public setSearchData(searchData: searchData) {
+    this.setState({ ...this.state, searchData });
+  }
+
+  public fetchPets(){
+    this.setState({ ...this.state, fetchPets: true });
   }
 
   render() {
-    let cards = this.mockNumberOfCards();
-
-
     return (
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected}></Header>
-        <AppUtilityBoxes selectedMode={this.state.selectedMode}></AppUtilityBoxes>
-        <div id="cards">
-          {cards.map((result, i) => {
-            return <PetCard key={i} title="The Dog" text="The most beautiful thing in the world."></PetCard>
-          })}
-        </div>
+        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData} fetchPets={this.fetchPets}></AppUtilityBoxes>
+        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}></PetCardList>
       </div>
     );
   }
