@@ -37,6 +37,7 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
         this.openFoundModal = this.openFoundModal.bind(this);
         this.closeFoundModal = this.closeFoundModal.bind(this);
         this.setFilter = this.setFilter.bind(this);
+        this.closeFilter = this.closeFilter.bind(this);
     }
 
     public handleChange(event: textEvent): void {
@@ -64,19 +65,34 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
         this.props.setSearchData(searchData);
     }
 
+    //TODO: Change to loops
+    public closeFilter(type: string): void {
+        if (type === 'Animal') {
+            this.searchData.animal = undefined;
+        } else if (type === 'Image') {
+            this.searchData.imgSrc = undefined;
+        } else if (type === 'Breed') {
+            this.searchData.breed = undefined;
+        } else if (type === 'Location') {
+            this.searchData.coordinates = undefined
+        }
+        this.setFilter(this.searchData);
+    }
+
+    //TODO: Change to loops
     public getFilterBoxes(): any {
         let filterAnimal: any, filterImgSrc: any, filterBreed: any, filterCoordinates: any;
         if (this.searchData.animal) {
-            filterAnimal = <FilterBox name={this.searchData.animal} type='Animal'></FilterBox>
+            filterAnimal = <FilterBox name={this.searchData.animal} type='Animal' setSearchTypeToNull={this.closeFilter}></FilterBox>
         }
         if (this.searchData.imgSrc) {
-            filterImgSrc = <FilterBox type='Image'></FilterBox>
+            filterImgSrc = <FilterBox type='Image' setSearchTypeToNull={this.closeFilter}></FilterBox>
         }
         if (this.searchData.breed) {
-            filterBreed = <FilterBox name={this.searchData.breed} type='Breed'></FilterBox>
+            filterBreed = <FilterBox name={this.searchData.breed} type='Breed' setSearchTypeToNull={this.closeFilter}></FilterBox>
         }
         if (this.searchData.coordinates) {
-            filterCoordinates = <FilterBox type="Location"></FilterBox>
+            filterCoordinates = <FilterBox type="Location" setSearchTypeToNull={this.closeFilter}></FilterBox>
         }
         return (
             <div id="div-filter">

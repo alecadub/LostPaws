@@ -4,7 +4,8 @@ import { Toast } from 'react-bootstrap';
 
 type filterBoxProps = {
     name?: string,
-    type: string
+    type: string,
+    setSearchTypeToNull: (filter: string) => void
 }
 
 class FilterBox extends React.Component<filterBoxProps> {
@@ -16,7 +17,7 @@ class FilterBox extends React.Component<filterBoxProps> {
         }
 
         return (
-            <Toast id="filter-box">
+            <Toast id="filter-box" onClose={() => this.props.setSearchTypeToNull(this.props.type)}>
                 <Toast.Header>
                     <small>Filter ON: {this.props.type} {name}</small>
                 </Toast.Header>
