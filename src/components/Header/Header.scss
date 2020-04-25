@@ -1,10 +1,24 @@
-@import './../../custom.scss';
+@import "./../../custom.scss";
 
 #logo-title {
-  color: $primary-color;
+  color: white;
   margin-left: 10px;
 }
 
 #header-button {
   margin-right: 10px;
+}
+
+.box {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+}
+
+.iconbox {
+  flex: 5;
+}
+
+.buttonbox {
+  flex: 6;
 }

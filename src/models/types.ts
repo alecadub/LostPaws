@@ -1,4 +1,4 @@
-export type selectedMode = 'lost' | 'found';
+export type selectedMode = 'lost' | 'found' | 'myad';
 
 export type inputFieldEvent = {
   target: {

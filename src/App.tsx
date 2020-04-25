@@ -44,6 +44,10 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.changeSelectedMode('found');
   }
 
+  public myAdSelected(): void {
+    this.changeSelectedMode('myad');
+  }
+
   public setSearchData(searchData: searchData) {
     this.setState({ ...this.state, searchData });
   }
@@ -55,7 +59,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   render() {
     return (
       <div>
-        <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected}></Header>
+        <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected} myAdSelected={this.myAdSelected}></Header>
         <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}
           fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
         <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData} quickSearch={this.state.quickSearch}></PetCardList>
