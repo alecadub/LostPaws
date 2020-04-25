@@ -24,7 +24,6 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
 
         let searchData: searchData = {}
 
-        //TODO: Change to loops
         if (event.target[0]) {
             searchData = { ...searchData, animal: event.target[0].value }
         }
