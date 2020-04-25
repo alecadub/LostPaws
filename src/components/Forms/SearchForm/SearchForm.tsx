@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { searchData, coordinates } from '../../../models/types';
 import './SearchForm.scss';
 import Maps from '../../Maps/Maps';
+import ImageForm from '../ImageForm/ImageForm';
 
 type searchFormProps = {
     closeModal: () => void,
@@ -72,6 +73,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
                     <Form.Control type="text" placeholder="Enter breed of animal (optional)" />
                 </Form.Group>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
+                <ImageForm></ImageForm>
                 {errorMessage}
                 <Button id="submit-button" variant="success" type="submit">
                     Submit
