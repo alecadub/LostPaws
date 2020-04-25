@@ -5,7 +5,7 @@ import Header from './components/Header/Header';
 import PetCardList from './components/PetCardList/PetCardList';
 import { selectedMode, searchData } from './models/types';
 
-class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean }> {
+class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean, quickSearch: string }> {
 
   constructor(props: any) {
     super(props);
@@ -17,17 +17,23 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
         imgSrc: undefined,
         coordinates: undefined
       },
-      fetchPets: true
+      fetchPets: true,
+      quickSearch: ''
     };
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
     this.foundSelected = this.foundSelected.bind(this);
     this.setSearchData = this.setSearchData.bind(this);
     this.fetchPets = this.fetchPets.bind(this);
+    this.setQuickSearch = this.setQuickSearch.bind(this);
+  }
+
+  public setQuickSearch(quickSearch: string) {
+    this.setState({ ...this.state, quickSearch })
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
-    this.setState({ selectedMode });
+    this.setState({ ...this.state, selectedMode });
   }
 
   public lostSelected(): void {
@@ -42,7 +48,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.setState({ ...this.state, searchData });
   }
 
-  public fetchPets(){
+  public fetchPets() {
     this.setState({ ...this.state, fetchPets: true });
   }
 
@@ -50,8 +56,9 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     return (
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected}></Header>
-        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData} fetchPets={this.fetchPets}></AppUtilityBoxes>
-        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}></PetCardList>
+        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}
+          fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
+        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData} quickSearch={this.state.quickSearch}></PetCardList>
       </div>
     );
   }

@@ -10,7 +10,8 @@ import FilterBox from './FilterBox/FilterBox';
 type appUtilityBoxesProps = {
     selectedMode: selectedMode,
     setSearchData: (searchData: searchData) => void,
-    fetchPets: () => void
+    fetchPets: () => void,
+    setQuickSearch: (quickSeach: string) => void
 }
 
 type textEvent = {
@@ -20,6 +21,9 @@ type textEvent = {
 }
 
 class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: string, openSearchModal: boolean, openFoundModal: boolean }> {
+
+    private timeout: any = null;
+    private quickSearch: string = '';
 
     private searchData: searchData = {
         animal: undefined,
@@ -41,7 +45,12 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
     }
 
     public handleChange(event: textEvent): void {
-        this.setState({ ...this.state, value: event.target.value });
+        this.quickSearch = event.target.value;
+        this.setState({ ...this.state, value: this.quickSearch });
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.props.setQuickSearch(this.quickSearch);
+        }, 1000)
     }
 
     public openSearchModal(): void {
@@ -115,7 +124,7 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
                 {filterBoxes}
                 <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>
                 <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /></Button>
-                <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={this.handleChange} />
+                <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={(event: any) => this.handleChange(event)} />
             </div>
         );
     }

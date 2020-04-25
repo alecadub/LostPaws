@@ -5,7 +5,8 @@ import { searchData, selectedMode } from '../../models/types';
 
 type petCardListProps = {
     filters: searchData,
-    selectedMode: selectedMode
+    selectedMode: selectedMode,
+    quickSearch: string
 }
 
 class PetCardList extends React.Component<petCardListProps> {
