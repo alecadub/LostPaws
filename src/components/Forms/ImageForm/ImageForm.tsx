@@ -2,7 +2,9 @@ import React from 'react';
 import './ImageForm.scss';
 import ImageUploader from 'react-images-upload';
 
-type imageFormProps = {}
+type imageFormProps = {
+    setImgSrc: (picture: any) => void
+}
 
 class ImageForm extends React.Component<imageFormProps, { pictures: any }> {
     constructor(props: imageFormProps) {
@@ -12,10 +14,11 @@ class ImageForm extends React.Component<imageFormProps, { pictures: any }> {
     }
 
     onDrop(picture: any) {
-        console.log(picture);
+        this.props.setImgSrc(picture);
         this.setState({
             pictures: this.state.pictures.concat(picture),
         });
+
     }
 
     render() {

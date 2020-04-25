@@ -13,11 +13,30 @@ type searchFormProps = {
 class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
 
     private coordinates: coordinates | null = null;
+    private imgSrc: string | null = null;
 
     constructor(props: searchFormProps) {
         super(props);
         this.state = { valid: true };
         this.setCoordinates = this.setCoordinates.bind(this);
+        this.setImgSrc = this.setImgSrc.bind(this);
+    }
+
+    public setCoordinates(coordinates: coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public async setImgSrc(picture: any) {
+        const files = picture;
+        const data = new FormData();
+        data.append('file', files[0]);
+        data.append('upload_preset', 'apu_preset');
+        const res = await fetch('https://api.cloudinary.com/v1_1/apu-cloud/image/upload', {
+            method: 'POST',
+            body: data
+        })
+        const file = await res.json();
+        this.imgSrc = file.secure_url;
     }
 
     public handleSubmit(event: any): void {
@@ -26,14 +45,19 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
         let searchData: searchData = {}
 
         if (event.target[0]) {
-            searchData = { ...searchData, animal: event.target[0].value }
+            searchData = { ...searchData, animal: event.target[0].value };
         }
+
         if (event.target[1]) {
-            searchData = { ...searchData, breed: event.target[1].value }
+            searchData = { ...searchData, breed: event.target[1].value };
         }
 
         if (this.coordinates) {
-            searchData = { ...searchData, coordinates: this.coordinates }
+            searchData = { ...searchData, coordinates: this.coordinates };
+        }
+
+        if (this.imgSrc) {
+            searchData = { ...searchData, imgSrc: this.imgSrc };
         }
 
         if (searchData.animal || searchData.breed || searchData.coordinates) {
@@ -44,15 +68,6 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
             this.setState({ valid: false });
         }
 
-    }
-
-    public setCoordinates(coordinates: coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public getPictureUrl(picture: any): string {
-        //TODO: Handle picture url 
-        return '';
     }
 
     render() {
@@ -73,7 +88,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
                     <Form.Control type="text" placeholder="Enter breed of animal (optional)" />
                 </Form.Group>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
-                <ImageForm></ImageForm>
+                <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
                 {errorMessage}
                 <Button id="submit-button" variant="success" type="submit">
                     Submit
