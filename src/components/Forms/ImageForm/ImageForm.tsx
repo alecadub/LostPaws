@@ -7,6 +7,7 @@ type imageFormProps = {
 }
 
 class ImageForm extends React.Component<imageFormProps, { pictures: any }> {
+
     constructor(props: imageFormProps) {
         super(props);
         this.state = { pictures: [] };
@@ -14,11 +15,23 @@ class ImageForm extends React.Component<imageFormProps, { pictures: any }> {
     }
 
     onDrop(picture: any) {
-        this.props.setImgSrc(picture);
+        this.setImgSrc(picture);
         this.setState({
             pictures: this.state.pictures.concat(picture),
         });
+    }
 
+    public async setImgSrc(picture: any) {
+        const files = picture;
+        const data = new FormData();
+        data.append('file', files[0]);
+        data.append('upload_preset', 'apu_preset');
+        const res = await fetch('https://api.cloudinary.com/v1_1/apu-cloud/image/upload', {
+            method: 'POST',
+            body: data
+        })
+        const file = await res.json();
+        this.props.setImgSrc(file.secure_url);
     }
 
     render() {

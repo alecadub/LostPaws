@@ -26,17 +26,8 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
         this.coordinates = coordinates;
     }
 
-    public async setImgSrc(picture: any) {
-        const files = picture;
-        const data = new FormData();
-        data.append('file', files[0]);
-        data.append('upload_preset', 'apu_preset');
-        const res = await fetch('https://api.cloudinary.com/v1_1/apu-cloud/image/upload', {
-            method: 'POST',
-            body: data
-        })
-        const file = await res.json();
-        this.imgSrc = file.secure_url;
+    public setImgSrc(imgSrc: any) {
+        this.imgSrc = imgSrc;
     }
 
     public handleSubmit(event: any): void {
