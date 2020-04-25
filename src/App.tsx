@@ -4,6 +4,7 @@ import AppUtilityBoxes from './components/AppUtilityBoxes/AppUtilityBoxes';
 import Header from './components/Header/Header';
 import PetCardList from './components/PetCardList/PetCardList';
 import { selectedMode, searchData } from './models/types';
+import MyAd from './components/MyAd/MyAd';
 
 class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean, quickSearch: string }> {
 
@@ -23,6 +24,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
     this.foundSelected = this.foundSelected.bind(this);
+    this.myAdSelected = this.myAdSelected.bind(this);
     this.setSearchData = this.setSearchData.bind(this);
     this.fetchPets = this.fetchPets.bind(this);
     this.setQuickSearch = this.setQuickSearch.bind(this);
@@ -57,11 +59,17 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   render() {
+    let page;
+    if (this.state.selectedMode === 'myad') {
+      page = <MyAd></MyAd>
+    } else {
+      page = <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}
+      fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
+    }
     return (
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected} myAdSelected={this.myAdSelected}></Header>
-        <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}
-          fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
+        {page}
         <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData} quickSearch={this.state.quickSearch}></PetCardList>
       </div>
     );
