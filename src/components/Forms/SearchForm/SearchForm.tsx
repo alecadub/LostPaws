@@ -51,7 +51,7 @@ class SearchForm extends React.Component<searchFormProps, { valid: boolean }> {
             searchData = { ...searchData, imgSrc: this.imgSrc };
         }
 
-        if (searchData.animal || searchData.breed || searchData.coordinates) {
+        if (searchData.animal || searchData.breed || searchData.coordinates || searchData.imgSrc) {
             this.setState({ valid: true });
             this.props.setSearchData(searchData);
             this.props.closeModal();
