@@ -11,7 +11,8 @@ type appUtilityBoxesProps = {
     selectedMode: selectedMode,
     setSearchData: (searchData: searchData) => void,
     fetchPets: () => void,
-    setQuickSearch: (quickSeach: string) => void
+    setQuickSearch: (quickSeach: string) => void,
+    myAdSelected: () => void
 }
 
 type textEvent = {
@@ -119,7 +120,7 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
             <div id="func-buttons">
                 <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal}
                     closeModal={this.closeSearchModal} setSearchData={this.setFilter}></SearchModal>
-                <AddModal selectedMode={this.props.selectedMode} isSet={this.state.openFoundModal}
+                <AddModal selectedMode={this.props.selectedMode} myAdSelected={this.props.myAdSelected} isSet={this.state.openFoundModal}
                     closeModal={this.closeFoundModal} fetchPets={this.props.fetchPets}></AddModal>
                 {filterBoxes}
                 <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>

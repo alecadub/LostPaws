@@ -63,8 +63,8 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
     } else {
-      page = <AppUtilityBoxes selectedMode={this.state.selectedMode} setSearchData={this.setSearchData}
-      fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
+      page = <AppUtilityBoxes selectedMode={this.state.selectedMode} myAdSelected={this.myAdSelected} setSearchData={this.setSearchData}
+        fetchPets={this.fetchPets} setQuickSearch={this.setQuickSearch}></AppUtilityBoxes>
     }
     return (
       <div>

@@ -9,7 +9,8 @@ import ImageForm from '../ImageForm/ImageForm';
 type addFormProps = {
     closeModal: () => void,
     selectedMode: selectedMode,
-    fetchPets: () => void
+    fetchPets: () => void,
+    myAdSelected: () => void
 }
 
 type addFormsType = 'lost' | 'found' | 'sighted';
@@ -97,10 +98,13 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
 
         if (Object.keys(dataToPost).length !== 0) {
             let canPost: boolean = false;
+            let switchToMyAd: boolean = false;
 
             if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
+                switchToMyAd = true;
                 localStorage.setItem('myAd', 'true');
+
             } else if (type === 'found' && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
             } else if (type === 'sighted' && dataToPost['imgSrc']) {
@@ -111,6 +115,9 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                 dataToPost['type'] = type;
                 this.postPetData(dataToPost);
                 this.props.fetchPets();
+                if (switchToMyAd) {
+                    this.props.myAdSelected();
+                }
                 this.props.closeModal();
             }
         }
