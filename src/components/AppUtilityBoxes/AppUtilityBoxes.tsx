@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Toast } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import { searchData, selectedMode } from '../../models/types';
 import AddModal from '../Modals/AddModal/AddModal';
 import SearchModal from '../Modals/SearchModal/SearchModal';
 import './AppUtilityBoxes.scss';
-
+import FilterBox from './FilterBox/FilterBox';
 
 type appUtilityBoxesProps = {
     selectedMode: selectedMode,
@@ -20,6 +20,13 @@ type textEvent = {
 }
 
 class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: string, openSearchModal: boolean, openFoundModal: boolean }> {
+
+    private searchData: searchData = {
+        animal: undefined,
+        breed: undefined,
+        imgSrc: undefined,
+        coordinates: undefined
+    };
 
     constructor(props: appUtilityBoxesProps) {
         super(props);
@@ -53,16 +60,43 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
     }
 
     public setFilter(searchData: searchData): void {
+        this.searchData = searchData;
         this.props.setSearchData(searchData);
     }
 
+    public getFilterBoxes(): any {
+        let filterAnimal: any, filterImgSrc: any, filterBreed: any, filterCoordinates: any;
+        if (this.searchData.animal) {
+            filterAnimal = <FilterBox name={this.searchData.animal} type='Animal'></FilterBox>
+        }
+        if (this.searchData.imgSrc) {
+            filterImgSrc = <FilterBox type='Image'></FilterBox>
+        }
+        if (this.searchData.breed) {
+            filterBreed = <FilterBox name={this.searchData.breed} type='Breed'></FilterBox>
+        }
+        if (this.searchData.coordinates) {
+            filterCoordinates = <FilterBox type="Location"></FilterBox>
+        }
+        return (
+            <div id="div-filter">
+                {filterAnimal}
+                {filterImgSrc}
+                {filterBreed}
+                {filterCoordinates}
+            </div>
+        );
+    }
+
     render() {
+        let filterBoxes = this.getFilterBoxes();
         return (
             <div id="func-buttons">
                 <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal}
                     closeModal={this.closeSearchModal} setSearchData={this.setFilter}></SearchModal>
                 <AddModal selectedMode={this.props.selectedMode} isSet={this.state.openFoundModal}
                     closeModal={this.closeFoundModal} fetchPets={this.props.fetchPets}></AddModal>
+                {filterBoxes}
                 <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>
                 <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /></Button>
                 <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={this.handleChange} />
