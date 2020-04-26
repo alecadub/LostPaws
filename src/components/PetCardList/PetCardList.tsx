@@ -53,7 +53,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getAllFoundSightedPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved')
+        let link: any = 'https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved' + this.getFilteredString();
+        axios.get(link)
             .then((resp: any) => {
                 this.props.dontFetchPets();
                 this.setState({ ...this.state, pets: resp.data.result });
@@ -64,8 +65,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getSimilarPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved&imageSrc='
-            + localStorage.getItem('imgSrc'))
+        let link: any = 'https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved' + this.getFilteredStringFromStorage();
+        axios.get(link)
             .then((resp: any) => {
                 this.props.dontFetchPets();
                 this.setState({ ...this.state, pets: resp.data.result });
@@ -95,6 +96,17 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
         return filteredString;
     }
 
+    public getFilteredStringFromStorage() {
+        let filteredString: string = '';
+        filteredString = this.props.filters.animal ?
+            filteredString.concat('&animal=' + this.props.filters.animal) : filteredString;
+
+        filteredString = this.props.filters.breed ?
+            filteredString.concat('&breed=' + this.props.filters.breed) : filteredString;
+
+        return filteredString;
+    }
+
     public getFilteredPetsFromQuickSearch() {
         let pets: any[] = this.state.pets.filter((result: any, i: any) => {
             for (var key in result) {
@@ -120,6 +132,7 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
         }
 
         if (this.props.selectedMode === 'myad' && this.props.fetchPets && !this.props.quickSearch) {
+            // this.getSimilarPets();
             this.props.dontFetchPets();
         }
 
