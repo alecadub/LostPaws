@@ -260,6 +260,9 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event, 'found')}>
                 <Form.Row>
                     <Form.Group controlId="validationEmailAdress">
+                        <div id="warning">
+                            Note that "Found" means you have the pet in your possession, and "Sighted" means you only have a picture of it.
+                        </div>
                         <Form.Label>Email adress</Form.Label>
                         <Form.Control
                             required
@@ -302,7 +305,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             <Form noValidate validated={this.state.valid} onSubmit={(event: any) => this.handleSubmit(event, 'lost')}>
                 <Form.Row>
                     <Form.Group controlId="validationName">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Pet's Name(s)</Form.Label>
                         <Form.Control
                             required
                             type="name"
