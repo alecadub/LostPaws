@@ -75,7 +75,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         let switchToMyAd: boolean = false;
 
         //Check if user can post
-        if (type === 'lost' && this.name && this.animal && this.email && this.imgSrc) {
+        if (type === 'lost' && this.name && this.animal && this.email && this.imgSrc && this.breed && this.coordinates) {
             canPost = true;
             switchToMyAd = true;
             localStorage.setItem('myAd', 'true');
@@ -83,13 +83,9 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             localStorage.setItem('animal', this.animal);
             localStorage.setItem('email', this.email);
             localStorage.setItem('imgSrc', this.imgSrc);
-            if (this.breed) {
-                localStorage.setItem('breed', this.breed);
-            }
-            if (this.coordinates) {
-                localStorage.setItem('lat', this.coordinates.lat.toString());
-                localStorage.setItem('lng', this.coordinates.lng.toString());
-            }
+            localStorage.setItem('breed', this.breed);
+            localStorage.setItem('lat', this.coordinates.lat.toString());
+            localStorage.setItem('lng', this.coordinates.lng.toString());
         } else if (type === 'found' && this.animal && this.email && this.imgSrc) {
             canPost = true;
         } else if (type === 'sighted' && this.imgSrc && this.coordinates) {
@@ -268,12 +264,16 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                     <Form.Group controlId="validationBreed">
                         <Form.Label>Breed</Form.Label>
                         <Form.Control
+                            required
                             type="text"
                             placeholder="ex: Beagle (optional)"
                             onChange={(event: any) => { this.setBreed(event) }}
                         />
                     </Form.Group>
                 </Form.Row>
+                <div id="text-center">
+                    Click on the map to let us <br />know where your pet was last seen ! (required)
+                </div>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
                 <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>

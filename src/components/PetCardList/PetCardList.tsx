@@ -40,7 +40,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getAllLostPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost')
+        let link: any = 'https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost' + this.getFilteredString();
+        axios.get(link)
             .then((resp: any) => {
                 this.props.dontFetchPets();
                 this.setState({ ...this.state, pets: resp.data.result });
@@ -79,9 +80,9 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
             filteredString.concat('&animal=' + this.props.filters.animal) : filteredString;
 
         filteredString = this.props.filters.breed ?
-            filteredString.concat('&breed=' + this.props.filters.animal) : filteredString;
+            filteredString.concat('&breed=' + this.props.filters.breed) : filteredString;
 
-        filteredString = this.props.filters.breed ?
+        filteredString = this.props.filters.imgSrc ?
             filteredString.concat('&imageSrc=' + this.props.filters.imgSrc) : filteredString;
 
         filteredString = this.props.filters.coordinates ?
