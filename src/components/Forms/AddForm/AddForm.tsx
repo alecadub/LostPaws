@@ -87,11 +87,9 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
 
         if (canPost) {
             this.postPetData(type);
-            this.props.fetchPets();
             if (switchToMyAd) {
                 this.props.myAdSelected();
             }
-            this.props.closeModal();
         }
 
     }
@@ -123,6 +121,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         })
             .then((response: any) => {
                 console.log(response);
+                this.props.fetchPets();
+                this.props.closeModal();
             })
             .catch((error: any) => {
                 console.log(error);
@@ -143,6 +143,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         })
             .then((response: any) => {
                 console.log(response);
+                this.props.fetchPets();
+                this.props.closeModal();
             })
             .catch((error: any) => {
                 console.log(error);
@@ -162,6 +164,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         })
             .then((response: any) => {
                 console.log(response);
+                this.props.fetchPets();
+                this.props.closeModal();
             })
             .catch((error: any) => {
                 console.log(error);

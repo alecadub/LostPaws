@@ -7,19 +7,20 @@ import axios from 'axios';
 type petCardListProps = {
     filters: searchData,
     selectedMode: selectedMode,
-    quickSearch: string
+    quickSearch: string,
+    fetchPets: boolean,
+    dontFetchPets: () => void
 }
 
-class PetCardList extends React.Component<petCardListProps, { loading: boolean, pets: any, selectedMode: selectedMode }> {
+class PetCardList extends React.Component<petCardListProps, { loading: boolean, pets: any }> {
 
 
     constructor(props: petCardListProps) {
         super(props);
-        this.state = { loading: false, pets: null, selectedMode: 'lost' };
+        this.state = { loading: false, pets: null };
         this.setLoading = this.setLoading.bind(this);
         this.getAllLostPets = this.getAllLostPets.bind(this);
         this.getAllFoundSightedPets = this.getAllFoundSightedPets.bind(this);
-        this.setSelectedMode = this.setSelectedMode.bind(this);
     }
 
     public componentDidMount() {
@@ -41,8 +42,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     public getAllLostPets() {
         axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost')
             .then((resp: any) => {
-                console.log(resp.data.result);
-                this.setState({ ...this.state, pets: resp.data.result, selectedMode: 'lost' });
+                this.props.dontFetchPets();
+                this.setState({ ...this.state, pets: resp.data.result });
             })
             .catch((resp: any) => {
                 console.error(resp);
@@ -50,34 +51,29 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getAllFoundSightedPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev/retrieved')
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=found')
             .then((resp: any) => {
-                console.log(resp);
-                this.setState({ ...this.state, pets: resp.data.result, selectedMode: 'found' });
+                this.props.dontFetchPets();
+                this.setState({ ...this.state, pets: resp.data.result });
             })
             .catch((resp: any) => {
                 console.error(resp);
             })
     }
 
-    public setSelectedMode(selectedMode: selectedMode) {
-        this.setState({ ...this.state, selectedMode });
-    }
 
     render() {
         let tempPets: any;
-
-        if (this.props.selectedMode === 'lost' && this.state.selectedMode !== 'lost') {
-            console.log('test');
+        if (this.props.selectedMode === 'lost' && this.props.fetchPets) {
             this.getAllLostPets();
         }
-        if (this.props.selectedMode === 'found' && this.state.selectedMode !== 'found') {
-            // this.getAllFoundSightedPets();
-            tempPets = this.mockNumberOfCards();
+        if (this.props.selectedMode === 'found' && this.props.fetchPets) {
+            console.log('test');
+            this.getAllFoundSightedPets();
         }
 
-        if (this.props.selectedMode === 'myad' && this.state.selectedMode !== 'myad') {
-            this.setSelectedMode('myad');
+        if (this.props.selectedMode === 'myad' && this.props.fetchPets) {
+            this.props.dontFetchPets();
         }
 
         let pets: any = this.state.pets ? this.state.pets : this.mockNumberOfCards();
