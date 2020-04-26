@@ -1,20 +1,22 @@
-@import "./../../custom.scss";
+@import './../../custom.scss';
 
 #box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 30px;
 }
 
 .text {
-    padding-top: 20px;
-    max-width: 50%;
+  padding-top: 20px;
+  max-width: 50%;
+  color: #4e1a75;
+  text-align: center;
 }
 
 .buttons {
-    padding: 20px;
+  padding: 20px;
 }
