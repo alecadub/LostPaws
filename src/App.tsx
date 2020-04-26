@@ -32,7 +32,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   public setQuickSearch(quickSearch: string) {
-    this.setState({ ...this.state, quickSearch })
+    this.setState({ ...this.state, quickSearch, fetchPets: true })
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
@@ -65,7 +65,6 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
 
   render() {
     let page;
-    console.log(this.state.searchData);
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
     } else {
