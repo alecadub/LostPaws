@@ -47,7 +47,7 @@ class Header extends React.Component<headerProps> {
               width="30"
               height="30"
             />
-            <Navbar.Brand><span id="logo-title">Lost Paws</span></Navbar.Brand>
+            <Navbar.Brand><span id="logo-title">Lost Paws MTL</span></Navbar.Brand>
           </div>
           <div className="buttonbox">
             {lostButton}

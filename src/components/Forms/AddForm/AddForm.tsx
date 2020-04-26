@@ -114,7 +114,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             breed: this.breed ? this.breed : '',
             lat: this.coordinates ? this.coordinates.lat.toString() : '',
             lng: this.coordinates ? this.coordinates.lng.toString() : '',
-            imgURL: this.imgSrc ? this.imgSrc : ''
+            imageUrl: this.imgSrc ? this.imgSrc : ''
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             email: this.email ? this.email : '',
             animal: this.animal ? this.animal : '',
             breed: this.breed ? this.breed : '',
-            imgURL: this.imgSrc ? this.imgSrc : ''
+            imageUrl: this.imgSrc ? this.imgSrc : ''
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         axios.post('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=sighted', {
             lat: this.coordinates ? this.coordinates.lat.toString() : '',
             lng: this.coordinates ? this.coordinates.lng.toString() : '',
-            imgURL: this.imgSrc ? this.imgSrc : ''
+            imageUrl: this.imgSrc ? this.imgSrc : ''
         }, {
             headers: {
                 'Content-Type': 'application/json',

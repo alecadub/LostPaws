@@ -44,7 +44,6 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
 
   public foundSelected(): void {
     this.changeSelectedMode('found');
-    this.test();
   }
 
   public myAdSelected(): void {
@@ -57,14 +56,6 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
 
   public fetchPets() {
     this.setState({ ...this.state, fetchPets: true });
-  }
-
-  public async test() {
-    const request = await fetch('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost', {
-      method: 'GET'
-    });
-    const resp: any = await request.json();
-    console.log(resp);
   }
 
   render() {

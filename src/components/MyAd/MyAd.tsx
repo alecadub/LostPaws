@@ -14,7 +14,7 @@ class MyAd extends React.Component<myAdProps, {}> {
                 <div className="text">
                     Welcome to your pet page!
                 </div>
-                <PetCard key={999} title="Your Dog" text="email: mmmmmm@gmail.com"></PetCard>
+                <PetCard key={999} type="myad"></PetCard>
                 <div className="buttons">
                     <Button id="header-button">Edit</Button>
                     <Button id="header-button">Delete</Button>

@@ -2,6 +2,7 @@ import React from 'react';
 import PetCard from './PetCard/PetCard';
 import './PetCardList.scss';
 import { searchData, selectedMode } from '../../models/types';
+import axios from 'axios';
 
 type petCardListProps = {
     filters: searchData,
@@ -9,19 +10,26 @@ type petCardListProps = {
     quickSearch: string
 }
 
-class PetCardList extends React.Component<petCardListProps, { loading: boolean }> {
+class PetCardList extends React.Component<petCardListProps, { loading: boolean, pets: any, selectedMode: selectedMode }> {
+
 
     constructor(props: petCardListProps) {
         super(props);
-        this.state = { loading: false };
-        this.getFormData = this.getFormData.bind(this);
+        this.state = { loading: false, pets: null, selectedMode: 'lost' };
         this.setLoading = this.setLoading.bind(this);
+        this.getAllLostPets = this.getAllLostPets.bind(this);
+        this.getAllFoundSightedPets = this.getAllFoundSightedPets.bind(this);
+        this.setSelectedMode = this.setSelectedMode.bind(this);
+    }
+
+    public componentDidMount() {
+        this.getAllLostPets();
     }
 
     public mockNumberOfCards(): number[] {
-        let mockCards: number[] = [];
-        for (let i: number = 0; i < 30; i++) {
-            mockCards.push(1);
+        let mockCards: any[] = [];
+        for (let i: number = 0; i < 20; i++) {
+            mockCards.push({});
         }
         return mockCards;
     }
@@ -30,62 +38,64 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean }
         this.setState({ loading });
     }
 
-    public getFormData(): FormData {
-        const data = new FormData();
-
-        if (this.props.filters.animal) {
-            data.append('animal', this.props.filters.animal);
-        } else {
-            data.append('animal', '');
-        }
-        if (this.props.filters.breed) {
-            data.append('breed', this.props.filters.breed);
-        } else {
-            data.append('breed', '');
-        }
-        if (this.props.filters.coordinates) {
-            data.append('lat', this.props.filters.coordinates.lat.toString());
-            data.append('lng', this.props.filters.coordinates.lng.toString());
-        } else {
-            data.append('lat', '');
-            data.append('lng', '');
-        }
-        return data;
+    public getAllLostPets() {
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost')
+            .then((resp: any) => {
+                console.log(resp.data.result);
+                this.setState({ ...this.state, pets: resp.data.result, selectedMode: 'lost' });
+            })
+            .catch((resp: any) => {
+                console.error(resp);
+            })
     }
 
-    public async getCards(data: FormData) {
-        this.setLoading(true);
-        const request = await fetch('test', { //TODO: Change with good URL.
-            method: 'POST',
-            body: data
-        })
-        this.setLoading(false);
-        return await request.json();
+    public getAllFoundSightedPets() {
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev/retrieved')
+            .then((resp: any) => {
+                console.log(resp);
+                this.setState({ ...this.state, pets: resp.data.result, selectedMode: 'found' });
+            })
+            .catch((resp: any) => {
+                console.error(resp);
+            })
     }
 
-    public async getAllCards() {
-        this.setLoading(true);
-        const request = await fetch('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost', {
-            method: 'GET'
-        });
-        console.log(request);
-        this.setLoading(false);
-        return await request.json();
-
+    public setSelectedMode(selectedMode: selectedMode) {
+        this.setState({ ...this.state, selectedMode });
     }
 
     render() {
-        // let formData: FormData = this.getFormData();
-        // let petData = this.getCards(formData);
-        console.log(this.props);
+        let tempPets: any;
 
-        let cards = this.mockNumberOfCards();
+        if (this.props.selectedMode === 'lost' && this.state.selectedMode !== 'lost') {
+            console.log('test');
+            this.getAllLostPets();
+        }
+        if (this.props.selectedMode === 'found' && this.state.selectedMode !== 'found') {
+            // this.getAllFoundSightedPets();
+            tempPets = this.mockNumberOfCards();
+        }
 
+        if (this.props.selectedMode === 'myad' && this.state.selectedMode !== 'myad') {
+            this.setSelectedMode('myad');
+        }
+
+        let pets: any = this.state.pets ? this.state.pets : this.mockNumberOfCards();
+
+        if (tempPets) {
+            pets = tempPets;
+        }
 
         return (
             <div id="cards">
-                {cards.map((result, i) => {
-                    return <PetCard key={i} title="The Dog" text="The most beautiful thing in the world."></PetCard>
+                {pets.map((result: any, i: any) => {
+                    return (
+                        <PetCard key={i} imgSrc={result.imageUrl}
+                            name={result.name} type={this.props.selectedMode} email={result.email}
+                            animal={result.animal} breed={result.breed}
+                            lat={result.lat} lng={result.lng}>
+                        </PetCard>
+                    )
                 })}
             </div>
         );
