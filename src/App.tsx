@@ -52,7 +52,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   public setSearchData(searchData: searchData) {
-    this.setState({ ...this.state, searchData });
+    this.setState({ ...this.state, searchData, fetchPets: true });
   }
 
   public fetchPets() {

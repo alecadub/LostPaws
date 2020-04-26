@@ -83,7 +83,7 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
                 </div>
                 <AlgoliaPlaces
                     id="algolia"
-                    placeholder='Not Implemented'
+                    placeholder='Write here to help you navigate the map ! (optional)'
                     options={{
                         appId: 'plMBNOJMIOCV',
                         apiKey: '97a259e33ac0a45b696f7f181fd0428e',

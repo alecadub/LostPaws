@@ -40,7 +40,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getAllLostPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost')
+        let link: any = 'https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost' + this.getFilteredString();
+        axios.get(link)
             .then((resp: any) => {
                 this.props.dontFetchPets();
                 this.setState({ ...this.state, pets: resp.data.result });
@@ -61,14 +62,44 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
             })
     }
 
+    public getSimilarPets() {
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=found&imageSrc='
+            + localStorage.getItem('imgSrc'))
+            .then((resp: any) => {
+                this.props.dontFetchPets();
+                this.setState({ ...this.state, pets: resp.data.result });
+            })
+            .catch((resp: any) => {
+                console.error(resp);
+            })
+    }
+
+    public getFilteredString() {
+        let filteredString: string = '';
+        filteredString = this.props.filters.animal ?
+            filteredString.concat('&animal=' + this.props.filters.animal) : filteredString;
+
+        filteredString = this.props.filters.breed ?
+            filteredString.concat('&breed=' + this.props.filters.breed) : filteredString;
+
+        filteredString = this.props.filters.imgSrc ?
+            filteredString.concat('&imageSrc=' + this.props.filters.imgSrc) : filteredString;
+
+        filteredString = this.props.filters.coordinates ?
+            filteredString.concat('&lat=' + this.props.filters.coordinates.lat) : filteredString;
+
+        filteredString = this.props.filters.coordinates ?
+            filteredString.concat('&lng=' + this.props.filters.coordinates.lng) : filteredString;
+
+        return filteredString;
+    }
+
 
     render() {
-        let tempPets: any;
         if (this.props.selectedMode === 'lost' && this.props.fetchPets) {
             this.getAllLostPets();
         }
         if (this.props.selectedMode === 'found' && this.props.fetchPets) {
-            console.log('test');
             this.getAllFoundSightedPets();
         }
 
@@ -77,10 +108,6 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
         }
 
         let pets: any = this.state.pets ? this.state.pets : this.mockNumberOfCards();
-
-        if (tempPets) {
-            pets = tempPets;
-        }
 
         return (
             <div id="cards">
