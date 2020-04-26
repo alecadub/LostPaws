@@ -63,6 +63,17 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean }
         return await request.json();
     }
 
+    public async getAllCards() {
+        this.setLoading(true);
+        const request = await fetch('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost', {
+            method: 'GET'
+        });
+        console.log(request);
+        this.setLoading(false);
+        return await request.json();
+
+    }
+
     render() {
         // let formData: FormData = this.getFormData();
         // let petData = this.getCards(formData);

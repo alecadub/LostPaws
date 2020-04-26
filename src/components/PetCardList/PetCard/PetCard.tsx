@@ -12,9 +12,17 @@ type PetCardProps = {
 class PetCard extends React.Component<PetCardProps> {
 
   render() {
+    let cardImg: any;
+    if (this.props.imgSrc) {
+      cardImg = <Card.Img variant="top"
+        src={this.props.imgSrc} />
+    } else {
+      cardImg = <Card.Img variant="top"
+        src="https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2018/01/12201051/cute-puppy-body-image.jpg" />
+    }
     return (
       <Card id="pet-card">
-        <Card.Img variant="top" src="https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2018/01/12201051/cute-puppy-body-image.jpg" />
+        {cardImg}
         <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
           <Card.Text>

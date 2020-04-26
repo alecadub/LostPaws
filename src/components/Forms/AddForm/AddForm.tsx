@@ -5,6 +5,7 @@ import { selectedMode, coordinates } from '../../../models/types';
 import { FaDog, FaEye } from 'react-icons/fa';
 import Maps from '../../Maps/Maps';
 import ImageForm from '../ImageForm/ImageForm';
+import axios from 'axios';
 
 type addFormProps = {
     closeModal: () => void,
@@ -69,190 +70,102 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     }
 
     public handleSubmit(event: any, type: addFormsType): void {
-        let dataToPost: any = {};
         event.preventDefault();
+        let canPost: boolean = false;
+        let switchToMyAd: boolean = false;
 
-        if (this.email) {
-            dataToPost['email'] = this.email;
+        //Check if user can post
+        if (type === 'lost' && this.name && this.animal && this.email && this.imgSrc) {
+            canPost = true;
+            switchToMyAd = true;
+            localStorage.setItem('myAd', 'true');
+        } else if (type === 'found' && this.animal && this.email && this.imgSrc) {
+            canPost = true;
+        } else if (type === 'sighted' && this.imgSrc && this.coordinates) {
+            canPost = true;
         }
 
-        if (this.breed) {
-            dataToPost['breed'] = this.breed;
-        }
-
-        if (this.animal) {
-            dataToPost['animal'] = this.animal;
-        }
-
-        if (this.coordinates) {
-            dataToPost['coordinates'] = this.coordinates;
-        }
-
-        if (this.name) {
-            dataToPost['name'] = this.name;
-        }
-
-        if (this.imgSrc) {
-            dataToPost['imgSrc'] = this.imgSrc;
-        }
-
-        if (Object.keys(dataToPost).length !== 0) {
-            let canPost: boolean = false;
-            let switchToMyAd: boolean = false;
-
-            if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
-                canPost = true;
-                switchToMyAd = true;
-                localStorage.setItem('myAd', 'true');
-            } else if (type === 'found' && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
-                canPost = true;
-            } else if (type === 'sighted' && dataToPost['imgSrc']) {
-                canPost = true;
+        if (canPost) {
+            this.postPetData(type);
+            this.props.fetchPets();
+            if (switchToMyAd) {
+                this.props.myAdSelected();
             }
+            this.props.closeModal();
+        }
 
-            if (canPost) {
-                dataToPost['type'] = type;
-                this.postPetData(dataToPost);
-                this.props.fetchPets();
-                if (switchToMyAd) {
-                    this.props.myAdSelected();
-                }
-                this.props.closeModal();
-            }
+    }
+
+    public postPetData(type: addFormsType) {
+        if (type === 'lost') {
+            this.postLostPet();
+        } else if (type === 'found') {
+            this.postFoundPet();
+        } else if (type === 'sighted') {
+            this.postSightedPet();
         }
     }
 
-    public postPetData(data: any) {
-        if (data.type === 'lost') {
-            this.postLostPet(data);
-        }
-        if (data.type === 'found') {
-            this.postFoundPet(data);
-        }
-
-        //TODO: Post data
-    }
-
-    public async postLostPet(data: any) {
-        const dataForm = new FormData();
-
-        if (data.name) {
-            dataForm.append('name', data.name);
-        } else {
-            dataForm.append('name', '');
-        }
-
-        if (data.email) {
-            dataForm.append('email', data.email);
-        } else {
-            dataForm.append('email', '');
-        }
-
-        if (data.animal) {
-            dataForm.append('animal', data.animal);
-        } else {
-            dataForm.append('animal', '');
-        }
-
-        if (data.breed) {
-            dataForm.append('breed', data.breed);
-        } else {
-            dataForm.append('breed', '');
-        }
-
-        if (data.coordinates) {
-            dataForm.append('lat', data.coordinates.lat.toString());
-            dataForm.append('lng', data.coordinates.lng.toString());
-        } else {
-            dataForm.append('lat', '');
-            dataForm.append('lng', '');
-        }
-
-        if (data.imgSrc) {
-            dataForm.append('imgURL', data.imgSrc);
-        } else {
-            dataForm.append('imgURL', '');
-        }
-
-        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=lost', {
-            method: 'POST',
-            body: data,
+    public postLostPet() {
+        axios.post('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost', {
+            name: this.name ? this.name : '',
+            email: this.email ? this.email : '',
+            animal: this.animal ? this.animal : '',
+            breed: this.breed ? this.breed : '',
+            lat: this.coordinates ? this.coordinates.lat.toString() : '',
+            lng: this.coordinates ? this.coordinates.lng.toString() : '',
+            imgURL: this.imgSrc ? this.imgSrc : ''
+        }, {
             headers: {
-                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+                'Content-Type': 'application/json',
+                'Origin': 'localhost:3000'
             }
-        });
-
-        const resp: any = await request.json();
-        console.log(resp);
+        })
+            .then((response: any) => {
+                console.log(response);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
     }
 
-    public async postFoundPet(data: any) {
-        const dataForm = new FormData();
-
-        if (data.email) {
-            dataForm.append('email', data.email);
-        } else {
-            dataForm.append('email', '');
-        }
-
-        if (data.animal) {
-            dataForm.append('animal', data.animal);
-        } else {
-            dataForm.append('animal', '');
-        }
-
-        if (data.breed) {
-            dataForm.append('breed', data.breed);
-        } else {
-            dataForm.append('breed', '');
-        }
-
-        if (data.imgSrc) {
-            dataForm.append('imgURL', data.imgSrc);
-        } else {
-            dataForm.append('imgURL', '');
-        }
-
-        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=found', {
-            method: 'POST',
-            body: data,
+    public postFoundPet() {
+        axios.post('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=found', {
+            email: this.email ? this.email : '',
+            animal: this.animal ? this.animal : '',
+            breed: this.breed ? this.breed : '',
+            imgURL: this.imgSrc ? this.imgSrc : ''
+        }, {
             headers: {
-                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+                'Content-Type': 'application/json',
+                'Origin': 'localhost:3000'
             }
-        });
-
-        const resp: any = await request.json();
-        console.log(resp);
+        })
+            .then((response: any) => {
+                console.log(response);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
     }
 
-    public async postSightedPet(data: any) {
-        const dataForm = new FormData();
-
-
-        if (data.coordinates) {
-            dataForm.append('lat', data.coordinates.lat.toString());
-            dataForm.append('lng', data.coordinates.lng.toString());
-        } else {
-            dataForm.append('lat', '');
-            dataForm.append('lng', '');
-        }
-
-        if (data.imgSrc) {
-            dataForm.append('imgURL', data.imgSrc);
-        } else {
-            dataForm.append('imgURL', '');
-        }
-
-        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=sighted', {
-            method: 'POST',
-            body: data,
+    public postSightedPet() {
+        axios.post('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=sighted', {
+            lat: this.coordinates ? this.coordinates.lat.toString() : '',
+            lng: this.coordinates ? this.coordinates.lng.toString() : '',
+            imgURL: this.imgSrc ? this.imgSrc : ''
+        }, {
             headers: {
-                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+                'Content-Type': 'application/json',
+                'Origin': 'localhost:3000'
             }
-        });
-
-        const resp: any = await request.json();
-        console.log(resp);
+        })
+            .then((response: any) => {
+                console.log(response);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
     }
 
     public getAddFoundPetForm(): any {
