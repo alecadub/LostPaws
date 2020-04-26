@@ -3,14 +3,14 @@ import './PetCard.scss';
 import { Card } from 'react-bootstrap';
 
 type PetCardProps = {
-  key: number,
-  imgSrc?: any,
-  name?: string,
-  email?: string,
-  animal?: string,
-  breed?: string,
-  lat?: string,
-  lng?: string,
+  key: number ,
+  imgSrc?: any | null,
+  name?: string | null,
+  email?: string | null,
+  animal?: string | null,
+  breed?: string | null,
+  lat?: string | null,
+  lng?: string | null,
   type: string
 }
 
