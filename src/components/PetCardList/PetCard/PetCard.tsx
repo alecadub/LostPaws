@@ -42,8 +42,9 @@ class PetCard extends React.Component<PetCardProps, { show: boolean }> {
     }
 
     if (this.props.lat && this.props.lng) {
-      location = <Button id="location-button" variant="primary" onClick={(event: any) => this.setModalState(true)}><GoLocation />Location</Button>;
+      location = <Button variant="primary" onClick={(event: any) => this.setModalState(true)}><GoLocation />Location</Button>;
     }
+
     return (
       <div>
         <Modal show={this.state.show} onHide={() => this.setModalState(false)}>
@@ -55,11 +56,14 @@ class PetCard extends React.Component<PetCardProps, { show: boolean }> {
         <Card id="pet-card">
           {cardImg}
           <Card.Body>
-            <Card.Title>{realType}:{this.props.name}</Card.Title>
+            <Card.Title>{realType.toUpperCase()}: {this.props.name}</Card.Title>
             <Card.Text>
-              {this.props.email}  <br />
-              {this.props.animal} - {this.props.breed} <br />
-              {location}
+              {this.props.email ? <span>Email: {this.props.email}<br /></span> : null}
+              {this.props.animal ? <span>Animal: {this.props.animal}<br /></span> : null}
+              {this.props.breed ? <span>Breed: {this.props.breed}<br /></span> : null}
+              <div id="location-button">
+                {location}
+              </div>
             </Card.Text>
           </Card.Body>
         </Card>
