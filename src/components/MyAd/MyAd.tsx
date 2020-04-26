@@ -26,7 +26,7 @@ class MyAd extends React.Component<myAdProps, {}> {
                 </div>
                 <div className="text">
                     Using AI and pet recognition technolgy, we have found the closest matches to your pet among the animals people have found and seen. 
-                    We also suggest looking yourself on the "Lost" tab and filtering by sightings.
+                    We also suggest looking yourself on the "Lost" tab and filtering by sightings. Refresh to get the newest data.
                 </div>
             </div>
         );

@@ -104,7 +104,6 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                 canPost = true;
                 switchToMyAd = true;
                 localStorage.setItem('myAd', 'true');
-
             } else if (type === 'found' && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
             } else if (type === 'sighted' && dataToPost['imgSrc']) {
