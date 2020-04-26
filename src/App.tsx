@@ -8,6 +8,9 @@ import MyAd from './components/MyAd/MyAd';
 
 class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean, quickSearch: string }> {
 
+
+  private emailWindow: any = null;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -29,6 +32,15 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.fetchPets = this.fetchPets.bind(this);
     this.setQuickSearch = this.setQuickSearch.bind(this);
     this.dontFetchPets = this.dontFetchPets.bind(this);
+  }
+
+  public componentDidMount() {
+    console.log('1');
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    if (params.get('id')) {
+      this.emailWindow = null;
+    }
   }
 
   public setQuickSearch(quickSearch: string) {
@@ -64,6 +76,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   render() {
+    console.log('2');
     let page;
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
