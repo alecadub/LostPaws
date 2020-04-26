@@ -14,19 +14,26 @@ class Header extends React.Component<headerProps> {
 
 
   render() {
-    let lostButton;
-    let foundButton;
-    let myAdButton;
+    let lostButton: any;
+    let foundButton: any;
+    let myAdButton: any;
+
     if (localStorage.getItem('myAd') === 'true') {
-      lostButton = <Button id="header-button" variant="light" onClick={this.props.lostSelected}>Lost</Button>;
-      foundButton = <Button id="header-button" variant="light" onClick={this.props.foundSelected}>Found</Button>;
-      myAdButton = <Button id="header-button" variant="light" onClick={this.props.myAdSelected}>My Pet</Button>;
-    } else if (this.props.selectedMode === 'lost') {
-      lostButton = <Button id="header-button" variant="light" onClick={this.props.lostSelected}>Lost</Button>;
-      foundButton = <Button id="header-button" variant="light" onClick={this.props.foundSelected}>Found</Button>;
+      if (this.props.selectedMode === 'myad') {
+        myAdButton = <Button id="header-button" variant="primary" onClick={this.props.myAdSelected}>MyAd</Button>;
+        lostButton = <Button id="header-button" variant="outline-primary" onClick={this.props.lostSelected}>Lost</Button>;
+        foundButton = <Button id="header-button" variant="outline-primary" onClick={this.props.foundSelected}>Found</Button>;
+      } else {
+        myAdButton = <Button id="header-button" variant="outline-primary" onClick={this.props.myAdSelected}>MyAd</Button>;
+      }
+    }
+
+    if (this.props.selectedMode === 'lost') {
+      lostButton = <Button id="header-button" variant="primary" onClick={this.props.lostSelected}>Lost</Button>;
+      foundButton = <Button id="header-button" variant="outline-primary" onClick={this.props.foundSelected}>Found</Button>;
     } else if (this.props.selectedMode === 'found') {
-      lostButton = <Button id="header-button" variant="light" onClick={this.props.lostSelected}>Lost</Button>;
-      foundButton = <Button id="header-button" variant="light" onClick={this.props.foundSelected}>Found</Button>;
+      lostButton = <Button id="header-button" variant="outline-primary" onClick={this.props.lostSelected}>Lost</Button>;
+      foundButton = <Button id="header-button" variant="primary" onClick={this.props.foundSelected}>Found</Button>;
     }
 
     return (

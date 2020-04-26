@@ -2,12 +2,12 @@
 $body-bg: #d3d3d3;
 
 // Variables
-$primary-color: #d3d3d3;
+$primary-color: green;
 
 // Override default bootstrap variables
 $theme-colors: (
-    "primary": #d3d3d3,
-    "secondary":#99ccff,
+  'primary': green,
+  'secondary': #99ccff,
 );
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
