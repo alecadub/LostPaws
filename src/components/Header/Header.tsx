@@ -30,14 +30,15 @@ class Header extends React.Component<headerProps> {
     }
 
     return (
-      <Navbar bg="primary" variant="dark">
+      <Navbar bg="secondary" variant="dark">
         <div className="box">
           <div className="iconbox">
             <img
+              id="logo"
               alt=""
-              src="https://s3.amazonaws.com/agileholedigging.com/img/lostpaws.svg"
-              width="40"
-              height="40"
+              src="https://i.ibb.co/3d0gFCd/Logo.png"
+              width="30"
+              height="30"
             />
             <Navbar.Brand><span id="logo-title">Lost Paws</span></Navbar.Brand>
           </div>
