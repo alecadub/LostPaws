@@ -28,6 +28,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.setSearchData = this.setSearchData.bind(this);
     this.fetchPets = this.fetchPets.bind(this);
     this.setQuickSearch = this.setQuickSearch.bind(this);
+    this.dontFetchPets = this.dontFetchPets.bind(this);
   }
 
   public setQuickSearch(quickSearch: string) {
@@ -35,7 +36,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   public changeSelectedMode(selectedMode: selectedMode): void {
-    this.setState({ ...this.state, selectedMode });
+    this.setState({ ...this.state, selectedMode, fetchPets: true });
   }
 
   public lostSelected(): void {
@@ -58,6 +59,10 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.setState({ ...this.state, fetchPets: true });
   }
 
+  public dontFetchPets() {
+    this.setState({ ...this.state, fetchPets: false });
+  }
+
   render() {
     let page;
     if (this.state.selectedMode === 'myad') {
@@ -70,7 +75,8 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
       <div>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected} myAdSelected={this.myAdSelected}></Header>
         {page}
-        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData} quickSearch={this.state.quickSearch}></PetCardList>
+        <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}
+          quickSearch={this.state.quickSearch} fetchPets={this.state.fetchPets} dontFetchPets={this.dontFetchPets}></PetCardList>
       </div>
     );
   }
