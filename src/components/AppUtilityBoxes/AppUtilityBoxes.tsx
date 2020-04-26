@@ -116,6 +116,12 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
 
     render() {
         let filterBoxes = this.getFilterBoxes();
+        let addButton: any;
+        if (this.props.selectedMode === 'found') {
+            addButton = <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /> Add Found or Sighted Pet</Button>
+        } else {
+            addButton = <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /> Add Your Lost Pet</Button>
+        }
         return (
             <div id="func-buttons">
                 <SearchModal selectedMode={this.props.selectedMode} isSet={this.state.openSearchModal}
@@ -123,8 +129,8 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
                 <AddModal selectedMode={this.props.selectedMode} myAdSelected={this.props.myAdSelected} isSet={this.state.openFoundModal}
                     closeModal={this.closeFoundModal} fetchPets={this.props.fetchPets}></AddModal>
                 {filterBoxes}
-                <Button id="add-button" variant="success" onClick={this.openFoundModal}><FaPlus /></Button>
-                <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /></Button>
+                {addButton}
+                <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /> Search</Button>
                 <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={(event: any) => this.handleChange(event)} />
             </div>
         );
