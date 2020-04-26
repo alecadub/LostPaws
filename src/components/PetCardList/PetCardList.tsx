@@ -3,6 +3,7 @@ import PetCard from './PetCard/PetCard';
 import './PetCardList.scss';
 import { searchData, selectedMode } from '../../models/types';
 import axios from 'axios';
+import { Spinner } from 'react-bootstrap';
 
 type petCardListProps = {
     filters: searchData,
@@ -96,6 +97,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
 
 
     render() {
+        let content: any;
+
         if (this.props.selectedMode === 'lost' && this.props.fetchPets) {
             this.getAllLostPets();
         }
@@ -107,19 +110,31 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
             this.props.dontFetchPets();
         }
 
-        let pets: any = this.state.pets ? this.state.pets : this.mockNumberOfCards();
+        if (this.props.fetchPets || !this.state.pets) {
+            content = (
+                <div>
+                    <Spinner animation="border" variant="primary" />
+                </div>
+            )
+        } else {
+            content = (
+                <div id="cards">
+                    {this.state.pets.map((result: any, i: any) => {
+                        return (
+                            <PetCard key={i} imgSrc={result.imageUrl}
+                                name={result.name} type={this.props.selectedMode} email={result.email}
+                                animal={result.animal} breed={result.breed}
+                                lat={result.lat} lng={result.lng}>
+                            </PetCard>
+                        )
+                    })}
+                </div>
+            )
+        }
 
         return (
             <div id="cards">
-                {pets.map((result: any, i: any) => {
-                    return (
-                        <PetCard key={i} imgSrc={result.imageUrl}
-                            name={result.name} type={this.props.selectedMode} email={result.email}
-                            animal={result.animal} breed={result.breed}
-                            lat={result.lat} lng={result.lng}>
-                        </PetCard>
-                    )
-                })}
+                {content}
             </div>
         );
     }
