@@ -102,7 +102,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
             if (type === 'lost' && dataToPost['name'] && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
                 localStorage.setItem('myAd', 'true');
-                this.props.myAdSelected();
+                setTimeout(() => {this.props.myAdSelected()}, 300)
             } else if (type === 'found' && dataToPost['animal'] && dataToPost['email'] && dataToPost['imgSrc']) {
                 canPost = true;
             } else if (type === 'sighted' && dataToPost['imgSrc']) {
@@ -120,6 +120,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
 
     public postPetData(data: any) {
         console.log(data);
+        console.log("post data ???????????????????????")
         //TODO: Post data
     }
 

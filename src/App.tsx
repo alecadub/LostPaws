@@ -47,7 +47,6 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   public myAdSelected(): void {
-    console.log("-------------------------")
     this.changeSelectedMode('myad');
   }
 
@@ -60,6 +59,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   render() {
+    console.log("---app state: " + this.state.selectedMode);
     let page;
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
