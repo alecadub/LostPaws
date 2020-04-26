@@ -123,13 +123,136 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     }
 
     public postPetData(data: any) {
-        console.log(data);
+        if (data.type === 'lost') {
+            this.postLostPet(data);
+        }
+        if (data.type === 'found') {
+            this.postFoundPet(data);
+        }
+
         //TODO: Post data
     }
 
-    public getPictureUrl(picture: any): string {
-        //TODO: Handle picture url 
-        return '';
+    public async postLostPet(data: any) {
+        const dataForm = new FormData();
+
+        if (data.name) {
+            dataForm.append('name', data.name);
+        } else {
+            dataForm.append('name', '');
+        }
+
+        if (data.email) {
+            dataForm.append('email', data.email);
+        } else {
+            dataForm.append('email', '');
+        }
+
+        if (data.animal) {
+            dataForm.append('animal', data.animal);
+        } else {
+            dataForm.append('animal', '');
+        }
+
+        if (data.breed) {
+            dataForm.append('breed', data.breed);
+        } else {
+            dataForm.append('breed', '');
+        }
+
+        if (data.coordinates) {
+            dataForm.append('lat', data.coordinates.lat.toString());
+            dataForm.append('lng', data.coordinates.lng.toString());
+        } else {
+            dataForm.append('lat', '');
+            dataForm.append('lng', '');
+        }
+
+        if (data.imgSrc) {
+            dataForm.append('imgURL', data.imgSrc);
+        } else {
+            dataForm.append('imgURL', '');
+        }
+
+        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=lost', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+            }
+        });
+
+        const resp: any = await request.json();
+        console.log(resp);
+    }
+
+    public async postFoundPet(data: any) {
+        const dataForm = new FormData();
+
+        if (data.email) {
+            dataForm.append('email', data.email);
+        } else {
+            dataForm.append('email', '');
+        }
+
+        if (data.animal) {
+            dataForm.append('animal', data.animal);
+        } else {
+            dataForm.append('animal', '');
+        }
+
+        if (data.breed) {
+            dataForm.append('breed', data.breed);
+        } else {
+            dataForm.append('breed', '');
+        }
+
+        if (data.imgSrc) {
+            dataForm.append('imgURL', data.imgSrc);
+        } else {
+            dataForm.append('imgURL', '');
+        }
+
+        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=found', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+            }
+        });
+
+        const resp: any = await request.json();
+        console.log(resp);
+    }
+
+    public async postSightedPet(data: any) {
+        const dataForm = new FormData();
+
+
+        if (data.coordinates) {
+            dataForm.append('lat', data.coordinates.lat.toString());
+            dataForm.append('lng', data.coordinates.lng.toString());
+        } else {
+            dataForm.append('lat', '');
+            dataForm.append('lng', '');
+        }
+
+        if (data.imgSrc) {
+            dataForm.append('imgURL', data.imgSrc);
+        } else {
+            dataForm.append('imgURL', '');
+        }
+
+        const request = await fetch('https://axd4r69g4j.execute-api.us-east-1.amazonaws.com/default/TrayNotes?type=sighted', {
+            method: 'POST',
+            body: data,
+            headers: {
+                'x-api-key': '6E9C3UBBDflzqASYrltj7iPZFKFKZG03XApfMDPd'
+            }
+        });
+
+        const resp: any = await request.json();
+        console.log(resp);
     }
 
     public getAddFoundPetForm(): any {
