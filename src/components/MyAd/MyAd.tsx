@@ -9,6 +9,7 @@ type myAdProps = {
 class MyAd extends React.Component<myAdProps, {}> {
 
     render() {
+        console.log(localStorage.getItem('imgSrc'));
         return (
             <div id="box">
                 <div className="text">

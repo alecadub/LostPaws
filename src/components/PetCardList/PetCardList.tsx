@@ -64,7 +64,7 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getSimilarPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=found&imageSrc='
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved&imageSrc='
             + localStorage.getItem('imgSrc'))
             .then((resp: any) => {
                 this.props.dontFetchPets();

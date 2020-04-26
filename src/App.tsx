@@ -5,8 +5,14 @@ import Header from './components/Header/Header';
 import PetCardList from './components/PetCardList/PetCardList';
 import { selectedMode, searchData } from './models/types';
 import MyAd from './components/MyAd/MyAd';
+import EmailModal from './components/Modals/EmailModal/EmailModal';
 
-class App extends React.Component<{}, { selectedMode: selectedMode, searchData: searchData, fetchPets: boolean, quickSearch: string }> {
+class App extends React.Component<{}, {
+  selectedMode: selectedMode, searchData: searchData,
+  fetchPets: boolean, quickSearch: string, openEmailModal: boolean
+}> {
+
+  private id: any = null
 
   constructor(props: any) {
     super(props);
@@ -16,10 +22,11 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
         animal: undefined,
         breed: undefined,
         imgSrc: undefined,
-        coordinates: undefined
+        coordinates: undefined,
       },
       fetchPets: true,
-      quickSearch: ''
+      quickSearch: '',
+      openEmailModal: false
     };
     this.changeSelectedMode = this.changeSelectedMode.bind(this);
     this.lostSelected = this.lostSelected.bind(this);
@@ -29,6 +36,20 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     this.fetchPets = this.fetchPets.bind(this);
     this.setQuickSearch = this.setQuickSearch.bind(this);
     this.dontFetchPets = this.dontFetchPets.bind(this);
+    this.closeEmailModal = this.closeEmailModal.bind(this);
+  }
+
+  public componentDidMount() {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    if (params.get('id')) {
+      this.id = params.get('id');
+      this.setState({ ...this.state, openEmailModal: true });
+    }
+  }
+
+  public closeEmailModal() {
+    this.setState({ ...this.state, openEmailModal: false });
   }
 
   public setQuickSearch(quickSearch: string) {
@@ -64,6 +85,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
   }
 
   render() {
+    console.log('2');
     let page;
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
@@ -74,6 +96,7 @@ class App extends React.Component<{}, { selectedMode: selectedMode, searchData: 
     }
     return (
       <div>
+        <EmailModal isSet={this.state.openEmailModal} closeModal={this.closeEmailModal} id={this.id}></EmailModal>
         <Header selectedMode={this.state.selectedMode} foundSelected={this.foundSelected} lostSelected={this.lostSelected} myAdSelected={this.myAdSelected}></Header>
         {page}
         <PetCardList selectedMode={this.state.selectedMode} filters={this.state.searchData}
