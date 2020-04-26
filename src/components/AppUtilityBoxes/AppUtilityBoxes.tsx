@@ -130,7 +130,7 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
                     closeModal={this.closeFoundModal} fetchPets={this.props.fetchPets}></AddModal>
                 {filterBoxes}
                 {addButton}
-                <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /> Search</Button>
+                <Button id="search-button" variant="info" onClick={this.openSearchModal}><FaSearch /> Filter</Button>
                 <input id="search-bar" placeholder="Quick search" value={this.state.value} onChange={(event: any) => this.handleChange(event)} />
             </div>
         );

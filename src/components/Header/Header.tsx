@@ -20,11 +20,11 @@ class Header extends React.Component<headerProps> {
 
     if (localStorage.getItem('myAd') === 'true') {
       if (this.props.selectedMode === 'myad') {
-        myAdButton = <Button id="header-button" variant="primary" onClick={this.props.myAdSelected}>MyAd</Button>;
+        myAdButton = <Button id="header-button" variant="primary" onClick={this.props.myAdSelected}>My Pet</Button>;
         lostButton = <Button id="header-button" variant="outline-primary" onClick={this.props.lostSelected}>Lost</Button>;
         foundButton = <Button id="header-button" variant="outline-primary" onClick={this.props.foundSelected}>Found</Button>;
       } else {
-        myAdButton = <Button id="header-button" variant="outline-primary" onClick={this.props.myAdSelected}>MyAd</Button>;
+        myAdButton = <Button id="header-button" variant="outline-primary" onClick={this.props.myAdSelected}>My Pet</Button>;
       }
     }
 
