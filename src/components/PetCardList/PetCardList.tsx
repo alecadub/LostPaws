@@ -3,6 +3,7 @@ import PetCard from './PetCard/PetCard';
 import './PetCardList.scss';
 import { searchData, selectedMode } from '../../models/types';
 import axios from 'axios';
+import { Spinner } from 'react-bootstrap';
 
 type petCardListProps = {
     filters: searchData,
@@ -94,32 +95,63 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
         return filteredString;
     }
 
+    public getFilteredPetsFromQuickSearch() {
+        let pets: any[] = this.state.pets.filter((result: any, i: any) => {
+            for (var key in result) {
+                if (result[key].toLowerCase().includes(this.props.quickSearch.toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        });
+        this.props.dontFetchPets();
+        this.setState({ ...this.state, pets })
+    }
+
 
     render() {
-        if (this.props.selectedMode === 'lost' && this.props.fetchPets) {
+        let content: any;
+
+        if (this.props.selectedMode === 'lost' && this.props.fetchPets && !this.props.quickSearch) {
             this.getAllLostPets();
         }
-        if (this.props.selectedMode === 'found' && this.props.fetchPets) {
+        if (this.props.selectedMode === 'found' && this.props.fetchPets && !this.props.quickSearch) {
             this.getAllFoundSightedPets();
         }
 
-        if (this.props.selectedMode === 'myad' && this.props.fetchPets) {
+        if (this.props.selectedMode === 'myad' && this.props.fetchPets && !this.props.quickSearch) {
             this.props.dontFetchPets();
         }
 
-        let pets: any = this.state.pets ? this.state.pets : this.mockNumberOfCards();
+        if (this.props.quickSearch && this.props.fetchPets) {
+            this.getFilteredPetsFromQuickSearch();
+        }
+
+        if (this.props.fetchPets || !this.state.pets) {
+            content = (
+                <div>
+                    <Spinner animation="border" variant="primary" />
+                </div>
+            )
+        } else {
+            content = (
+                <div id="cards">
+                    {this.state.pets.map((result: any, i: any) => {
+                        return (
+                            <PetCard key={i} imgSrc={result.imageUrl}
+                                name={result.name} type={this.props.selectedMode} email={result.email}
+                                animal={result.animal} breed={result.breed}
+                                lat={result.lat} lng={result.lng}>
+                            </PetCard>
+                        )
+                    })}
+                </div>
+            )
+        }
 
         return (
             <div id="cards">
-                {pets.map((result: any, i: any) => {
-                    return (
-                        <PetCard key={i} imgSrc={result.imageUrl}
-                            name={result.name} type={this.props.selectedMode} email={result.email}
-                            animal={result.animal} breed={result.breed}
-                            lat={result.lat} lng={result.lng}>
-                        </PetCard>
-                    )
-                })}
+                {content}
             </div>
         );
     }

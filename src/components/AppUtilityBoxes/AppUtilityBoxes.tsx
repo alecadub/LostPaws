@@ -12,7 +12,8 @@ type appUtilityBoxesProps = {
     setSearchData: (searchData: searchData) => void,
     fetchPets: () => void,
     setQuickSearch: (quickSeach: string) => void,
-    myAdSelected: () => void
+    myAdSelected: () => void,
+    searchDataFromParent: searchData
 }
 
 type textEvent = {
@@ -115,6 +116,11 @@ class AppUtilityBoxes extends React.Component<appUtilityBoxesProps, { value: str
     }
 
     render() {
+
+        if (this.props.searchDataFromParent) {
+            this.searchData = this.props.searchDataFromParent;
+        }
+
         let filterBoxes = this.getFilterBoxes();
         let addButton: any;
         if (this.props.selectedMode === 'found') {
