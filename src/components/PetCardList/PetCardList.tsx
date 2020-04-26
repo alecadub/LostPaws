@@ -51,7 +51,7 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
     }
 
     public getAllFoundSightedPets() {
-        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=found')
+        axios.get('https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=retrieved')
             .then((resp: any) => {
                 this.props.dontFetchPets();
                 this.setState({ ...this.state, pets: resp.data.result });

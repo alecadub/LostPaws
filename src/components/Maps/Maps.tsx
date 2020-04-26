@@ -6,7 +6,9 @@ import './Maps.scss';
 import { coordinates } from '../../models/types';
 
 type mapsProps = {
-    returnCoordinates?: (coordinates: coordinates) => void
+    returnCoordinates?: (coordinates: coordinates) => void,
+    lat?: string | null,
+    lng?: string | null
 }
 
 type algoliaQuery = {
@@ -59,9 +61,7 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
         }
     }
 
-    render() {
-
-        const position: any = [this.state.lat, this.state.lng];
+    public getStaticMap(position: any) {
         return (
             <div>
                 <div >
@@ -69,13 +69,47 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
                         ref={this.map}
                         center={position}
                         zoom={this.state.zoom}
-                        onclick={(event: LeafletMouseEvent) => this.handleMapClick(event)}
                     >
                         <TileLayer
                             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={position} ref={this.marker}>
+                            <Popup >
+                                Pet found here!
+                            </Popup>
+                        </Marker>
+                    </Map>
+                </div>
+                <AlgoliaPlaces
+                    id="algolia"
+                    placeholder='Not Implemented'
+                    options={{
+                        appId: 'plMBNOJMIOCV',
+                        apiKey: '97a259e33ac0a45b696f7f181fd0428e',
+                        countries: ['ca'],
+                    }}
+                    onChange={(event: algoliaQuery) => this.handleAlgoliaQuery(event)}
+                />
+            </div>
+        );
+    }
+
+    public getFormMap() {
+        return (
+            <div>
+                <div >
+                    <Map
+                        ref={this.map}
+                        center={[this.state.lat, this.state.lng]}
+                        zoom={this.state.zoom}
+                        onclick={(event: LeafletMouseEvent) => this.handleMapClick(event)}
+                    >
+                        <TileLayer
+                            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[this.state.lat, this.state.lng]} ref={this.marker}>
                             <Popup >
                                 Pet found here!
                             </Popup>
@@ -92,6 +126,22 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
                     }}
                     onChange={(event: algoliaQuery) => this.handleAlgoliaQuery(event)}
                 />
+            </div>
+        );
+    }
+
+    render() {
+        let map: any;
+        let position: any;
+        if (this.props.lat && this.props.lng) {
+            position = [+this.props.lat, +this.props.lng];
+            map = this.getStaticMap(position);
+        } else {
+            map = this.getFormMap();
+        }
+        return (
+            <div>
+                {map}
             </div>
         );
     }
