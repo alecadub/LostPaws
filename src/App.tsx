@@ -85,7 +85,6 @@ class App extends React.Component<{}, {
   }
 
   render() {
-    console.log('2');
     let page;
     if (this.state.selectedMode === 'myad') {
       page = <MyAd></MyAd>
