@@ -9,12 +9,11 @@ type myAdProps = {
 class MyAd extends React.Component<myAdProps, {}> {
 
     render() {
-        console.log(localStorage.getItem('imgSrc'));
         return (
             <div id="box">
-                <div className="text">
+                <h2 className="text">
                     Welcome to your pet page!
-                </div>
+                </h2>
                 <PetCard key={999} imgSrc={localStorage.getItem('imgSrc')}
                     name={localStorage.getItem('petName')} type="My Pet" email={localStorage.getItem('email')}
                     animal={localStorage.getItem('animal')} breed={localStorage.getItem('breed')}
@@ -25,10 +24,9 @@ class MyAd extends React.Component<myAdProps, {}> {
                     <Button id="header-button">Edit</Button>
                     <Button id="header-button">Delete</Button>
                 </div>
-                <div className="text">
-                    Using AI and pet recognition technolgy, we have found the closest matches to your pet among the animals people have found and seen.
-                    We also suggest looking yourself on the "Lost" tab and filtering by sightings. Refresh to get the newest data.
-                </div>
+                <h3 className="text">
+                    Using AI and pet recognition technolgy, we have found the closest matches to your pet.
+                </h3>
             </div>
         );
     }

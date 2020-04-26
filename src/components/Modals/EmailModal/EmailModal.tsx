@@ -44,7 +44,6 @@ class EmailModal extends React.Component<EmailModalProps, { show: boolean, valid
 
     public getPetById() {
         let link: any = 'https://naxb0qignf.execute-api.us-east-1.amazonaws.com/dev?type=lost&id=' + this.props.id
-        console.log(link);
         axios.get(link)
             .then((resp: any) => {
                 if (resp.data.email === this.email) {

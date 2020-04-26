@@ -1,11 +1,12 @@
+import axios from 'axios';
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import './AddForm.scss';
-import { selectedMode, coordinates } from '../../../models/types';
+import ReCAPTCHA from "react-google-recaptcha";
 import { FaDog, FaEye } from 'react-icons/fa';
+import { coordinates, selectedMode } from '../../../models/types';
 import Maps from '../../Maps/Maps';
 import ImageForm from '../ImageForm/ImageForm';
-import axios from 'axios';
+import './AddForm.scss';
 
 type addFormProps = {
     closeModal: () => void,
@@ -24,6 +25,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
     private breed: string | null = null;
     private name: string | null = null;
     private imgSrc: string | null = null;
+    private recaptcha: any | null = null;
 
     constructor(props: addFormProps) {
         super(props);
@@ -35,11 +37,17 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         this.setAnimal = this.setAnimal.bind(this);
         this.setName = this.setName.bind(this);
         this.setImgSrc = this.setImgSrc.bind(this);
+        this.setRecaptcha = this.setRecaptcha.bind(this);
     }
 
     public setCoordinates(coordinates: coordinates) {
         this.coordinates = coordinates;
     }
+
+    public setRecaptcha(recaptcha: any) {
+        this.recaptcha = recaptcha;
+    }
+
 
     public setEmail(event: any) {
         this.email = event.target.value;
@@ -75,7 +83,8 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
         let switchToMyAd: boolean = false;
 
         //Check if user can post
-        if (type === 'lost' && this.name && this.animal && this.email && this.imgSrc && this.breed && this.coordinates) {
+        if (type === 'lost' && this.name && this.animal && this.email
+            && this.imgSrc && this.breed && this.coordinates && this.recaptcha) {
             canPost = true;
             switchToMyAd = true;
             localStorage.setItem('myAd', 'true');
@@ -276,6 +285,10 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                 </div>
                 <Maps returnCoordinates={this.setCoordinates}></Maps>
                 <ImageForm setImgSrc={this.setImgSrc}></ImageForm>
+                <ReCAPTCHA
+                    sitekey="6LfRs-4UAAAAAJ5xG3ioZD-se2mAxGaYSojbRmBR"
+                    onChange={(event: any) => this.setRecaptcha(event)}
+                />
                 <Button id="submit-button" variant="success" type="submit">Submit</Button>
             </Form>
         );
