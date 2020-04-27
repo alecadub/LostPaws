@@ -33,6 +33,10 @@ class PetCard extends React.Component<PetCardProps, { show: boolean }> {
     let realType: string = this.props.email ? this.props.type : 'Sighted';
     let location: any;
 
+    if (realType === 'myad') {
+      realType = 'SIMILAR';
+    }
+
     if (this.props.imgSrc) {
       cardImg = <Card.Img variant="top" id="image-card"
         src={this.props.imgSrc} />
