@@ -76,7 +76,7 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
                         />
                         <Marker position={position} ref={this.marker}>
                             <Popup >
-                                Pet found here!
+                                Pet found/lost here!
                             </Popup>
                         </Marker>
                     </Map>
@@ -111,7 +111,7 @@ class Maps extends React.Component<mapsProps, { lat: number, lng: number, zoom: 
                         />
                         <Marker position={[this.state.lat, this.state.lng]} ref={this.marker}>
                             <Popup >
-                                Pet found here!
+                                Pet found/lost here!
                             </Popup>
                         </Marker>
                     </Map>

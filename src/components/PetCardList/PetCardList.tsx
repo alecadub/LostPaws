@@ -4,6 +4,7 @@ import './PetCardList.scss';
 import { searchData, selectedMode } from '../../models/types';
 import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
+import { FaRegSadCry } from 'react-icons/fa';
 
 type petCardListProps = {
     filters: searchData,
@@ -98,12 +99,8 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
 
     public getFilteredStringFromStorage() {
         let filteredString: string = '';
-        filteredString = this.props.filters.animal ?
-            filteredString.concat('&animal=' + this.props.filters.animal) : filteredString;
-
-        filteredString = this.props.filters.breed ?
-            filteredString.concat('&breed=' + this.props.filters.breed) : filteredString;
-
+        filteredString = localStorage.getItem('animal') ?
+            filteredString.concat('&animal=' + localStorage.getItem('animal')) : filteredString;
         return filteredString;
     }
 
@@ -132,8 +129,7 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
         }
 
         if (this.props.selectedMode === 'myad' && this.props.fetchPets && !this.props.quickSearch) {
-            // this.getSimilarPets();
-            this.props.dontFetchPets();
+            this.getSimilarPets();
         }
 
         if (this.props.quickSearch && this.props.fetchPets) {
@@ -147,19 +143,27 @@ class PetCardList extends React.Component<petCardListProps, { loading: boolean, 
                 </div>
             )
         } else {
-            content = (
-                <div id="cards">
-                    {this.state.pets.map((result: any, i: any) => {
-                        return (
-                            <PetCard key={i} imgSrc={result.imageUrl}
-                                name={result.name} type={this.props.selectedMode} email={result.email}
-                                animal={result.animal} breed={result.breed}
-                                lat={result.lat} lng={result.lng}>
-                            </PetCard>
-                        )
-                    })}
-                </div>
-            )
+            if (Object.keys(this.state.pets).length === 0) {
+                content = (
+                    <div id="no-content">
+                        <FaRegSadCry id="cry-icons" /><span id="purple-text">No current content match your pet</span><FaRegSadCry id="cry-icons" />
+                    </div>
+                );
+            } else {
+                content = (
+                    <div id="cards">
+                        {this.state.pets.map((result: any, i: any) => {
+                            return (
+                                <PetCard key={i} imgSrc={result.imageUrl}
+                                    name={result.name} type={this.props.selectedMode} email={result.email}
+                                    animal={result.animal} breed={result.breed}
+                                    lat={result.lat} lng={result.lng}>
+                                </PetCard>
+                            )
+                        })}
+                    </div>
+                )
+            }
         }
 
         return (

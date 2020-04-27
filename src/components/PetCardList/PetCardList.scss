@@ -1,7 +1,24 @@
 #cards {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 85%;
-    justify-content: center;
-    margin: auto;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 85%;
+  justify-content: center;
+  margin: auto;
+}
+
+#purple-text {
+  color: #4e1a75;
+  margin-top: 10px;
+}
+
+#no-content {
+  width: 50%;
+  height: 50%;
+  text-align: center;
+}
+
+#cry-icons {
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #4e1a75;
+}
