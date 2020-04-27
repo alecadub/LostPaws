@@ -213,11 +213,11 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         <Form.Control
                             required
                             type="text"
-                            placeholder="ex: dog (required)"
+                            placeholder="ex: dog"
                             onChange={(event: any) => { this.setAnimal(event) }}
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                    </Form.Group>
+                    </Form.Group><br />
                     <Form.Group controlId="validationAnimal">
                         <Form.Label>Breed</Form.Label>
                         <Form.Control
@@ -265,7 +265,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         <Form.Control
                             required
                             type="text"
-                            placeholder="ex: dog (required)"
+                            placeholder="ex: dog"
                             onChange={(event: any) => { this.setAnimal(event) }}
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -275,7 +275,7 @@ class AddForm extends React.Component<addFormProps, { valid: boolean, addPetSele
                         <Form.Control
                             required
                             type="text"
-                            placeholder="ex: Beagle (optional)"
+                            placeholder="ex: Beagle"
                             onChange={(event: any) => { this.setBreed(event) }}
                         />
                     </Form.Group>
