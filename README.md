@@ -4,7 +4,7 @@
 
 ## LostPaws
 
-LostPaws is a simple prototype that help users find their lost pets!
+LostPaws is a simple prototype that help users find their lost pets! Check it live: http://lostpawsmtl.com/
 
 ### Team Members
 
